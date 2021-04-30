@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -12,31 +13,42 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = 'frontend';
+
+    public function __construct()
+    {
+        if ( request()->is( 'admin/*' ) )
+        {
+            $this->rootView = 'admin';
+        } else
+        {
+            $this->rootView = 'frontend';
+        }
+    }
 
     /**
      * Determine the current asset version.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return string|null
      */
-    public function version(Request $request)
+    public function version( Request $request )
     {
-        return parent::version($request);
+        return parent::version( $request );
     }
 
     /**
      * Define the props that are shared by default.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
-    public function share(Request $request)
+    public function share( Request $request )
     {
-        return array_merge(parent::share($request), [
+        return array_merge( parent::share( $request ), [
             'auth' => [
                 'user' => $request->user(),
             ],
-        ]);
+        ] );
     }
 }
