@@ -24,20 +24,12 @@
 </template>
 
 <script>
-    import BreezeButton from '@/Components/Button'
-    import BreezeGuestLayout from "@/Layouts/Guest"
-    import BreezeInput from '@/Components/Input'
-    import BreezeLabel from '@/Components/Label'
-    import BreezeValidationErrors from '@/Components/ValidationErrors'
+    import AdminAuthLayout from "@/Layouts/AdminAuth"
 
     export default {
-        layout: BreezeGuestLayout,
+        layout: AdminAuthLayout,
 
         components: {
-            BreezeButton,
-            BreezeInput,
-            BreezeLabel,
-            BreezeValidationErrors,
         },
 
         props: {
@@ -56,7 +48,7 @@
 
         methods: {
             submit() {
-                this.form.post(this.route('password.email'))
+                this.form.post(this.route('admin.password.email'))
             }
         }
     }

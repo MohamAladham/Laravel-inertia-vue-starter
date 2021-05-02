@@ -23,7 +23,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <inertia-link :href="route('login')" class="underline text-sm text-gray-600 hover:text-gray-900">
+            <inertia-link :href="route('admin.login')" class="underline text-sm text-gray-600 hover:text-gray-900">
                 Already registered?
             </inertia-link>
 
@@ -35,20 +35,12 @@
 </template>
 
 <script>
-    import BreezeButton from '@/Components/Button'
-    import BreezeGuestLayout from '@/Layouts/Guest'
-    import BreezeInput from '@/Components/Input'
-    import BreezeLabel from '@/Components/Label'
-    import BreezeValidationErrors from '@/Components/ValidationErrors'
+    import AdminAuthLayout from '@/Layouts/AdminAuth'
 
     export default {
-        layout: BreezeGuestLayout,
+        layout: AdminAuthLayout,
 
         components: {
-            BreezeButton,
-            BreezeInput,
-            BreezeLabel,
-            BreezeValidationErrors,
         },
 
         props: {
@@ -70,7 +62,7 @@
 
         methods: {
             submit() {
-                this.form.post(this.route('register'), {
+                this.form.post(this.route('admin.register'), {
                     onFinish: () => this.form.reset('password', 'password_confirmation'),
                 })
             }

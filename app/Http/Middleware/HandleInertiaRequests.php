@@ -17,7 +17,10 @@ class HandleInertiaRequests extends Middleware
 
     public function __construct()
     {
-        if ( request()->is( 'admin/*' ) )
+        if ( request()->is( 'admin/login' ) )
+        {
+            $this->rootView = 'admin_auth';
+        } elseif ( request()->is( 'admin/*' ) )
         {
             $this->rootView = 'admin';
         } else
@@ -46,9 +49,10 @@ class HandleInertiaRequests extends Middleware
     public function share( Request $request )
     {
         return array_merge( parent::share( $request ), [
-            'auth' => [
+            'auth'    => [
                 'user' => $request->user(),
             ],
+            'appName' => config( 'app.name' ),
         ] );
     }
 }

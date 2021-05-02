@@ -98,19 +98,9 @@
 </template>
 
 <script>
-    import BreezeApplicationLogo from '@/Components/ApplicationLogo'
-    import BreezeDropdown from '@/Components/Dropdown'
-    import BreezeDropdownLink from '@/Components/DropdownLink'
-    import BreezeNavLink from '@/Components/NavLink'
-    import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink'
 
     export default {
         components: {
-            BreezeApplicationLogo,
-            BreezeDropdown,
-            BreezeDropdownLink,
-            BreezeNavLink,
-            BreezeResponsiveNavLink,
         },
 
         data() {
