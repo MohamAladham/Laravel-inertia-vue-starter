@@ -1,55 +1,57 @@
 <template>
-    <div class="mb-4 text-sm text-gray-600">
-        Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.
-    </div>
 
-    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-        {{ status }}
-    </div>
+    <!-- Reset Password v1 -->
+    <div class="card mb-0">
+        <div class="card-body">
+            <a href="javascript:void(0);" class="brand-logo">
+                <img src="/assets/admin/images/logo/logo.png">
+            </a>
 
-    <breeze-validation-errors class="mb-4" />
 
-    <form @submit.prevent="submit">
-        <div>
-            <breeze-label for="email" value="Email" />
-            <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+            <h4 class="card-title mb-1">إستعادة كلمة المرور 🔒</h4>
+            <p class="card-text mb-2">كلمة المرور الجديدة يجب أن تكون مختلفة عن الكلمة القديمة</p>
+
+            <form class="auth-reset-password-form mt-2" @submit.prevent="submit">
+                <text-input v-model:value="form.email" :error="form.errors.email" label="البريد الإلكتروني" :tabindex="1" autofocus placeholder="email@example.com"/>
+
+                <button class="btn btn-primary btn-block" tabindex="3">إرسال رابط إستعادة كلمة المرور</button>
+            </form>
+
+            <p class="text-center mt-2">
+                <a :href="route('admin.login')"> <i data-feather="chevron-left"></i> العودة لتسجيل الدخول </a>
+            </p>
         </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <breeze-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Email Password Reset Link
-            </breeze-button>
-        </div>
-    </form>
+    </div>
+    <!-- /Reset Password v1 -->
 </template>
 
 <script>
-    import AdminAuthLayout from "@/Layouts/AdminAuth"
+import AdminAuthLayout from "@/Layouts/AdminAuth"
+import TextInput from "@/Components/Inputs/TextInput";
 
-    export default {
-        layout: AdminAuthLayout,
+export default {
+    layout: AdminAuthLayout,
 
-        components: {
-        },
+    components: {TextInput},
 
-        props: {
-            auth: Object,
-            errors: Object,
-            status: String,
-        },
+    props: {
+        auth: Object,
+        errors: Object,
+        status: String,
+    },
 
-        data() {
-            return {
-                form: this.$inertia.form({
-                    email: ''
-                })
-            }
-        },
+    data() {
+        return {
+            form: this.$inertia.form({
+                email: ''
+            })
+        }
+    },
 
-        methods: {
-            submit() {
-                this.form.post(this.route('admin.password.email'))
-            }
+    methods: {
+        submit() {
+            this.form.post(this.route('admin.password.email'))
         }
     }
+}
 </script>

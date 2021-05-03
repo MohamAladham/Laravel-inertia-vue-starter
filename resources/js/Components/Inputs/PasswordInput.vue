@@ -5,7 +5,7 @@
 
             <div class="d-flex justify-content-between">
                 <label :for="id">{{ label }}</label>
-                <a href="{{route('admin.password.request')}}">
+                <a :href="route('admin.password.request')">
                     <small>نسيت كلمة المرور؟</small>
                 </a>
             </div>

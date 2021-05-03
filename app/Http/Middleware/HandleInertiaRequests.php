@@ -17,7 +17,7 @@ class HandleInertiaRequests extends Middleware
 
     public function __construct()
     {
-        if ( request()->is( 'admin/login' ) )
+        if ( in_array( request()->route()->getName(), [ 'admin.login', 'admin.password.request', 'admin.password.reset', 'admin.password.confirm' ] ) )
         {
             $this->rootView = 'admin_auth';
         } elseif ( request()->is( 'admin/*' ) )
