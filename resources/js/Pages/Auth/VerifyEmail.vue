@@ -13,18 +13,20 @@
                 Resend Verification Email
             </breeze-button>
 
-            <inertia-link :href="route('admin.logout')" method="post" as="button" class="underline text-sm text-gray-600 hover:text-gray-900">Log Out</inertia-link>
+            <inertia-link :href="route('logout')" method="post" as="button" class="underline text-sm text-gray-600 hover:text-gray-900">Log Out</inertia-link>
         </div>
     </form>
 </template>
 
 <script>
-    import AdminAuthLayout from "@/Layouts/AdminAuth"
+    import BreezeButton from '@/Components/Button'
+    import BreezeGuestLayout from "@/Layouts/Guest"
 
     export default {
-        layout: AdminAuthLayout,
+        layout: BreezeGuestLayout,
 
         components: {
+            BreezeButton,
         },
 
         props: {
@@ -41,7 +43,7 @@
 
         methods: {
             submit() {
-                this.form.post(this.route('admin.verification.send'))
+                this.form.post(this.route('verification.send'))
             },
         },
 

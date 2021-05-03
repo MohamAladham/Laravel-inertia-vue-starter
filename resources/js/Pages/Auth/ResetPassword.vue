@@ -26,12 +26,20 @@
 </template>
 
 <script>
-    import AdminAuthLayout from "@/Layouts/AdminAuth"
+    import BreezeButton from '@/Components/Button'
+    import BreezeGuestLayout from "@/Layouts/Guest"
+    import BreezeInput from '@/Components/Input'
+    import BreezeLabel from '@/Components/Label'
+    import BreezeValidationErrors from '@/Components/ValidationErrors'
 
     export default {
-        layout: AdminAuthLayout,
+        layout: BreezeGuestLayout,
 
         components: {
+            BreezeButton,
+            BreezeInput,
+            BreezeLabel,
+            BreezeValidationErrors,
         },
 
         props: {
@@ -54,7 +62,7 @@
 
         methods: {
             submit() {
-                this.form.post(this.route('admin.password.update'), {
+                this.form.post(this.route('password.update'), {
                     onFinish: () => this.form.reset('password', 'password_confirmation'),
                 })
             }

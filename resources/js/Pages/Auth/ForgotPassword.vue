@@ -30,7 +30,7 @@ import AdminAuthLayout from "@/Layouts/AdminAuth"
 import TextInput from "@/Components/Inputs/TextInput";
 
 export default {
-    layout: AdminAuthLayout,
+        layout: AdminAuthLayout,
 
     components: {TextInput},
 
@@ -50,7 +50,7 @@ export default {
 
     methods: {
         submit() {
-            this.form.post(this.route('admin.password.email'))
+                this.form.post(this.route('admin.password.email'))
         }
     }
 }
