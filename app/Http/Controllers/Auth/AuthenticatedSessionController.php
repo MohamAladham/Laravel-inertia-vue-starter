@@ -17,43 +17,56 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create( $guard = 'user' )
     {
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
+        if ( $guard == 'admin' )
+        {
+            return Inertia::render( 'Admin/Auth/Login', [
+                'canResetPassword' => Route::has( 'password.request' ),
+                'status'           => session( 'status' ),
+            ] );
+        } else
+        {
+            return Inertia::render( 'Frontend/Auth/Login', [
+                'canResetPassword' => Route::has( 'password.request' ),
+                'status'           => session( 'status' ),
+            ] );
+        }
     }
 
     /**
      * Handle an incoming authentication request.
      *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @param \App\Http\Requests\Auth\LoginRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
+    public function store( LoginRequest $request, $guard = 'user' )
     {
-        $request->authenticate();
+        $request->authenticate( $guard );
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        //dd( \auth()->guard( $guard )->user()->toArray() );
+
+        $redirect_to = $guard == 'admin' ? RouteServiceProvider::ADMIN_HOME : RouteServiceProvider::HOME;
+
+        return redirect()->intended( $redirect_to );
     }
 
     /**
      * Destroy an authenticated session.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy( Request $request )
     {
-        Auth::guard('web')->logout();
+        Auth::guard( 'user' )->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect( '/' );
     }
 }

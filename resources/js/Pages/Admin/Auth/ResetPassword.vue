@@ -1,3 +1,4 @@
+<!--
 <template>
     <breeze-validation-errors class="mb-4" />
 
@@ -69,3 +70,4 @@
         }
     }
 </script>
+-->

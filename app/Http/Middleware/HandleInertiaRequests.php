@@ -17,7 +17,9 @@ class HandleInertiaRequests extends Middleware
 
     public function __construct()
     {
-        if ( in_array( request()->route()->getName(), [ 'admin.login', 'admin.password.request', 'admin.password.reset', 'admin.password.confirm' ] ) )
+        if ( in_array( request()->route()->getName(), [ 'login', 'password.request', 'password.reset', 'password.confirm' ] )
+            && \request()->route()->parameter( 'guard' ) == 'admin'
+        )
         {
             $this->rootView = 'admin_auth';
         } elseif ( request()->is( 'admin/*' ) )
@@ -50,7 +52,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge( parent::share( $request ), [
             'auth'    => [
-                'user' => $request->user(),
+                'user' => $request->user( 'user' ) ? : $request->user( 'admin' ) ? : NULL,
             ],
             'appName' => config( 'app.name' ),
         ] );

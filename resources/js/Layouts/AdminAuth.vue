@@ -1,6 +1,5 @@
-<!--
 <template>
-    &lt;!&ndash; BEGIN: Content&ndash;&gt;
+    <!-- BEGIN: Content-->
     <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -17,7 +16,7 @@
             </div>
         </div>
     </div>
-    &lt;!&ndash; END: Content&ndash;&gt;
+    <!-- END: Content-->
 </template>
 
 <script>
@@ -26,4 +25,3 @@ export default {
     components: {}
 }
 </script>
--->

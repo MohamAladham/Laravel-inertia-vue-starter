@@ -35,8 +35,8 @@
 
 <script>
 import AdminAuthLayout from "@/Layouts/AdminAuth"
-import TextInput from "@/Components/Inputs/TextInput";
-import PasswordInput from "@/Components/Inputs/PasswordInput";
+import TextInput from "@/Components/Admin/Inputs/TextInput";
+import PasswordInput from "@/Components/Admin/Inputs/PasswordInput";
 
 export default {
     layout: AdminAuthLayout,
@@ -65,7 +65,7 @@ export default {
                     ...data,
                     remember: this.form.remember ? 'on' : ''
                 }))
-                .post(this.route('admin.login'), {
+                .post(this.route('login'), {
                     onFinish: () => this.form.reset('password'),
                 })
         }

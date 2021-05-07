@@ -18,7 +18,7 @@
             </form>
 
             <p class="text-center mt-2">
-                <a :href="route('admin.login')"> <i data-feather="chevron-left"></i> العودة لتسجيل الدخول </a>
+                <a :href="route('login')"> <i data-feather="chevron-left"></i> العودة لتسجيل الدخول </a>
             </p>
         </div>
     </div>
@@ -27,7 +27,7 @@
 
 <script>
 import AdminAuthLayout from "@/Layouts/AdminAuth"
-import TextInput from "@/Components/Inputs/TextInput";
+import TextInput from "@/Components/Admin/Inputs/TextInput";
 
 export default {
         layout: AdminAuthLayout,
@@ -50,7 +50,7 @@ export default {
 
     methods: {
         submit() {
-                this.form.post(this.route('admin.password.email'))
+                this.form.post(this.route('password.email'))
         }
     }
 }
