@@ -12,9 +12,9 @@
             <form class="auth-login-form mt-2" @submit.prevent="submit">
 
                 <div class="row">
-                    <text-input v-model:value="form.email" :error="form.errors.email" label="البريد الإلكتروني" :tabindex="1" autofocus placeholder="email@example.com"/>
-                    <password-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" :tabindex="2"/>
-                    <password-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" :tabindex="3"/>
+                    <text-input v-model:value="form.email" :error="form.errors.email" :tabindex="1" autofocus label="البريد الإلكتروني" placeholder="email@example.com"/>
+                    <text-input v-model:value="form.password" :error="form.errors.password" :tabindex="2" :type="'password'" label="كلمة المرور"/>
+                    <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" :tabindex="3" :type="'password'" label="تأكيد كلمة المرور"/>
                 </div>
 
                 <button class="btn btn-primary btn-block" tabindex="4">تغيير كلمة المرور</button>
@@ -28,14 +28,12 @@
 <script>
 import AdminAuthLayout from "@/Layouts/AdminAuth"
 import TextInput from "@/Components/Admin/Inputs/TextInput";
-import PasswordInput from "@/Components/Admin/Inputs/PasswordInput";
 
 export default {
     layout: AdminAuthLayout,
 
     components: {
         TextInput,
-        PasswordInput,
     },
 
     props: {

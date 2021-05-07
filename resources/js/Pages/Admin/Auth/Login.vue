@@ -13,7 +13,38 @@
 
                 <div class="row">
                     <text-input v-model:value="form.email" :error="form.errors.email" label="البريد الإلكتروني" :tabindex="1" autofocus placeholder="email@example.com"/>
-                    <password-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" :tabindex="2"/>
+
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+
+
+                            <div class="d-flex justify-content-between">
+                                <label>{{ label }}</label>
+                                <a :href="route('password.request', 'admin')">
+                                    <small>نسيت كلمة المرور؟</small>
+                                </a>
+                            </div>
+                            <div class="input-group input-group-merge form-password-toggle">
+
+                                <input
+                                    type="password"
+                                    :class="{ 'border-danger': form.errors.password}"
+                                    :value="form.password"
+                                    class="form-control form-control-merge"
+                                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                    tabindex="2"
+                                />
+                                <div class="input-group-append">
+                                    <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+                                </div>
+                            </div>
+                            <p class="font-small-3 text-danger" v-if="form.errors.password">
+                                {{ form.errors.password }}
+                            </p>
+
+                        </div>
+                    </div>
 
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -36,12 +67,11 @@
 <script>
 import AdminAuthLayout from "@/Layouts/AdminAuth"
 import TextInput from "@/Components/Admin/Inputs/TextInput";
-import PasswordInput from "@/Components/Admin/Inputs/PasswordInput";
 
 export default {
     layout: AdminAuthLayout,
 
-    components: {TextInput, PasswordInput},
+    components: {TextInput},
 
     props: {
         auth: Object,
