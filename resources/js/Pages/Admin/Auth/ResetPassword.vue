@@ -1,73 +1,67 @@
-<!--
 <template>
-    <breeze-validation-errors class="mb-4" />
+    <!-- Login v1 -->
+    <div class="card mb-0">
+        <div class="card-body">
+            <a href="javascript:void(0);" class="brand-logo">
+                <img src="/assets/admin/images/logo/logo.png">
+            </a>
 
-    <form @submit.prevent="submit">
-        <div>
-            <breeze-label for="email" value="Email" />
-            <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
-        </div>
+            <h4 class="card-title mb-1">إستعادة كلمة المرور 🔒</h4>
+            <p class="card-text mb-2">يرجى إدخال البيانات التالية لتغيير كلمة المرور الخاصة بك</p>
 
-        <div class="mt-4">
-            <breeze-label for="password" value="Password" />
-            <breeze-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="new-password" />
-        </div>
+            <form class="auth-login-form mt-2" @submit.prevent="submit">
 
-        <div class="mt-4">
-            <breeze-label for="password_confirmation" value="Confirm Password" />
-            <breeze-input id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" required autocomplete="new-password" />
-        </div>
+                <div class="row">
+                    <text-input v-model:value="form.email" :error="form.errors.email" label="البريد الإلكتروني" :tabindex="1" autofocus placeholder="email@example.com"/>
+                    <password-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" :tabindex="2"/>
+                    <password-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" :tabindex="3"/>
+                </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <breeze-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Reset Password
-            </breeze-button>
+                <button class="btn btn-primary btn-block" tabindex="4">تغيير كلمة المرور</button>
+            </form>
+
         </div>
-    </form>
+    </div>
+    <!-- /Login v1 -->
 </template>
 
 <script>
-    import BreezeButton from '@/Components/Button'
-    import BreezeGuestLayout from "@/Layouts/Guest"
-    import BreezeInput from '@/Components/Input'
-    import BreezeLabel from '@/Components/Label'
-    import BreezeValidationErrors from '@/Components/ValidationErrors'
+import AdminAuthLayout from "@/Layouts/AdminAuth"
+import TextInput from "@/Components/Admin/Inputs/TextInput";
+import PasswordInput from "@/Components/Admin/Inputs/PasswordInput";
 
-    export default {
-        layout: BreezeGuestLayout,
+export default {
+    layout: AdminAuthLayout,
 
-        components: {
-            BreezeButton,
-            BreezeInput,
-            BreezeLabel,
-            BreezeValidationErrors,
-        },
+    components: {
+        TextInput,
+        PasswordInput,
+    },
 
-        props: {
-            auth: Object,
-            email: String,
-            errors: Object,
-            token: String,
-        },
+    props: {
+        auth: Object,
+        email: String,
+        errors: Object,
+        token: String,
+    },
 
-        data() {
-            return {
-                form: this.$inertia.form({
-                    token: this.token,
-                    email: this.email,
-                    password: '',
-                    password_confirmation: '',
-                })
-            }
-        },
+    data() {
+        return {
+            form: this.$inertia.form({
+                token: this.token,
+                email: this.email,
+                password: '',
+                password_confirmation: '',
+            })
+        }
+    },
 
-        methods: {
-            submit() {
-                this.form.post(this.route('password.update'), {
-                    onFinish: () => this.form.reset('password', 'password_confirmation'),
-                })
-            }
+    methods: {
+        submit() {
+            this.form.post(this.route('password.update', 'admin'), {
+                onFinish: () => this.form.reset('password', 'password_confirmation'),
+            })
         }
     }
+}
 </script>
--->

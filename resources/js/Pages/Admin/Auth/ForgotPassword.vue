@@ -7,9 +7,14 @@
                 <img src="/assets/admin/images/logo/logo.png">
             </a>
 
-
             <h4 class="card-title mb-1">إستعادة كلمة المرور 🔒</h4>
-            <p class="card-text mb-2">كلمة المرور الجديدة يجب أن تكون مختلفة عن الكلمة القديمة</p>
+            <p class="card-text mb-2">سيتم إرسال رابط إلى بريدك الإلكتروني يمكنك من خلاله تغيير كلمة المرور</p>
+
+
+            <div v-if="status" class="alert alert-success p-1">
+                {{ status }}
+            </div>
+
 
             <form class="auth-reset-password-form mt-2" @submit.prevent="submit">
                 <text-input v-model:value="form.email" :error="form.errors.email" label="البريد الإلكتروني" :tabindex="1" autofocus placeholder="email@example.com"/>
@@ -30,7 +35,7 @@ import AdminAuthLayout from "@/Layouts/AdminAuth"
 import TextInput from "@/Components/Admin/Inputs/TextInput";
 
 export default {
-        layout: AdminAuthLayout,
+    layout: AdminAuthLayout,
 
     components: {TextInput},
 
@@ -50,7 +55,7 @@ export default {
 
     methods: {
         submit() {
-                this.form.post(this.route('password.email'))
+            this.form.post(this.route('password.email', 'admin'))
         }
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -15,40 +16,49 @@ class PasswordResetLinkController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create( $guard = 'user' )
     {
-        return Inertia::render('Auth/ForgotPassword', [
-            'status' => session('status'),
-        ]);
+        if ( $guard == 'admin' )
+        {
+            return Inertia::render( 'Admin/Auth/ForgotPassword', [
+                'status' => session( 'status' ),
+            ] );
+        } else
+        {
+            return Inertia::render( 'Frontend/Auth/ForgotPassword', [
+                'status' => session( 'status' ),
+            ] );
+        }
     }
 
     /**
      * Handle an incoming password reset link request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store( Request $request, $guard = 'user' )
     {
-        $request->validate([
+        $request->validate( [
             'email' => 'required|email',
-        ]);
+        ] );
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $request->only('email')
+        $status = Password::broker( $guard . 's' )->sendResetLink(
+            $request->only( 'email' )
         );
 
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
+        if ( $status == Password::RESET_LINK_SENT )
+        {
+            return back()->with( 'status', __( $status ) );
         }
 
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
+        throw ValidationException::withMessages( [
+            'email' => [ trans( $status ) ],
+        ] );
     }
 }
