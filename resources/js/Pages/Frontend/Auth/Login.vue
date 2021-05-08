@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import AdminAuthLayout from "@/Layouts/AdminAuth"
+import AdminAuthLayout from "@/Layouts/Admin/AdminAuth"
 import TextInput from "@/Components/Admin/Inputs/TextInput";
 
 export default {

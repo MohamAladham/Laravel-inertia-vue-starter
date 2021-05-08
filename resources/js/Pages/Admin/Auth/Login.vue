@@ -14,13 +14,12 @@
                 <div class="row">
                     <text-input v-model:value="form.email" :error="form.errors.email" label="البريد الإلكتروني" :tabindex="1" autofocus placeholder="email@example.com"/>
 
-
                     <div class="col-sm-12">
                         <div class="form-group">
 
 
                             <div class="d-flex justify-content-between">
-                                <label>{{ label }}</label>
+                                <label>كلمة المرور</label>
                                 <a :href="route('password.request', 'admin')">
                                     <small>نسيت كلمة المرور؟</small>
                                 </a>
@@ -30,7 +29,7 @@
                                 <input
                                     type="password"
                                     :class="{ 'border-danger': form.errors.password}"
-                                    :value="form.password"
+                                    v-model="form.password"
                                     class="form-control form-control-merge"
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                     tabindex="2"
@@ -49,7 +48,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="remember" name="remember" tabindex="3"/>
+                                <input class="custom-control-input" type="checkbox" id="remember" v-model="form.remember" name="remember" tabindex="3"/>
                                 <label class="custom-control-label" for="remember"> تذكرني </label>
                             </div>
                         </div>
@@ -65,7 +64,7 @@
 </template>
 
 <script>
-import AdminAuthLayout from "@/Layouts/AdminAuth"
+import AdminAuthLayout from "@/Layouts/Admin/AdminAuth"
 import TextInput from "@/Components/Admin/Inputs/TextInput";
 
 export default {

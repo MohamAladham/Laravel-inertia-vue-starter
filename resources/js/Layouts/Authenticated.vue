@@ -9,14 +9,14 @@
                         <div class="flex">
                             &lt;!&ndash; Logo &ndash;&gt;
                             <div class="flex-shrink-0 flex items-center">
-                                <inertia-link :href="route('dashboard')">
+                                <inertia-link :href="route('admin.dashboard')">
                                     <breeze-application-logo class="block h-9 w-auto" />
                                 </inertia-link>
                             </div>
 
                             &lt;!&ndash; Navigation Links &ndash;&gt;
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <breeze-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                                <breeze-nav-link :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
                                     Dashboard
                                 </breeze-nav-link>
                             </div>
@@ -62,7 +62,7 @@
                 &lt;!&ndash; Responsive Navigation Menu &ndash;&gt;
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <breeze-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
+                        <breeze-responsive-nav-link :href="route('admin.dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </breeze-responsive-nav-link>
                     </div>
