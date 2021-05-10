@@ -1,5 +1,5 @@
 <template>
-
+    <page-head :title="title"/>
     <div class="content-header row">
         <div class="content-header-left col-12 mb-2">
             <div class="row breadcrumbs-top">
@@ -28,12 +28,15 @@
 <script>
 
 import AdminLayout from "@/Layouts/Admin/Layout";
+import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
+    components: {PageHead},
     layout: AdminLayout,
     props: {
         auth: Object,
         errors: Object,
+        title: ''
     },
 }
 </script>

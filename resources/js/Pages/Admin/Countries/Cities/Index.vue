@@ -1,4 +1,5 @@
 <template>
+    <page-head :title="title"/>
     <Breadcrumb :title="title" :links="breadcrumbLinks"/>
 
     <div class="content-body">
@@ -93,12 +94,13 @@ import Card from "@/Components/Admin/Card";
 import Paginate from "@/Components/Admin/Paginate";
 import draggable from "vuedraggable";
 import TableSearch from "@/Components/Admin/TableSearch";
+import PageHead from "@/Layouts/Admin/PageHead";
 
 
 export default {
     layout: AdminLayout,
     props: ["items", 'errors', 'country', 'region', 'title'],
-    components: {TableSearch, Card, Breadcrumb, ConfirmModal, Create, Edit, Paginate, draggable},
+    components: {PageHead, TableSearch, Card, Breadcrumb, ConfirmModal, Create, Edit, Paginate, draggable},
     data() {
         return {
             editItemForm: this.$inertia.form({

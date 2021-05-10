@@ -1,5 +1,6 @@
 <template>
 
+    <page-head :title="title"/>
     <Breadcrumb :title="title" :links="breadcrumbLinks"/>
 
     <div class="content-body">
@@ -103,10 +104,11 @@ import Card from "@/Components/Admin/Card";
 import Paginate from "@/Components/Admin/Paginate";
 import draggable from "vuedraggable";
 import TableSearch from "@/Components/Admin/TableSearch";
+import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
     layout: AdminLayout,
-    components: {TableSearch, Card, Breadcrumb, ConfirmModal, Create, Edit, Paginate, draggable},
+    components: {PageHead, TableSearch, Card, Breadcrumb, ConfirmModal, Create, Edit, Paginate, draggable},
     props: ["items", 'errors', 'country', 'title'],
     data() {
         return {
