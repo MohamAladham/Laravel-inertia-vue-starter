@@ -20,7 +20,8 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-                <li v-for="link in links" :key="link.title" :class="{'active':link.isActive}" class="nav-item">
+                <li v-for="(link, index) in links" :key="link.title"
+                    :class="[isActive(index)?'active':'', link.subLinks&&isActive(index)?'sidebar-group-active open':'', link.subLinks?'has-sub':'','nav-item']">
 
                     <template v-if="!link.subLinks">
                         <inertia-link class="d-flex align-items-center" :href="link.url">
@@ -38,7 +39,7 @@
                         </a>
 
                         <ul v-if="link.subLinks" class="menu-content">
-                            <li v-for="subLink in link.subLinks" :key="link.title + subLink.title" :class="{'active':subLink.isActive}">
+                            <li v-for="(subLink, subIndex) in link.subLinks" :key="link.title + subLink.title" :class="isActive(index,subIndex)?'active':''">
                                 <inertia-link class="d-flex align-items-center" :href="subLink.url">
                                     <i data-feather="circle"></i>
                                     <span class="menu-item">{{ subLink.title }}</span>
@@ -49,6 +50,12 @@
 
                 </li>
 
+                <li :class="['nav-item']">
+                    <inertia-link class="d-flex align-items-center" :href="route('logout')" method="post" as="button">
+                        <i data-feather="log-out"></i>
+                        <span class="menu-title text-truncate">تسجيل الخروج</span>
+                    </inertia-link>
+                </li>
 
             </ul>
         </div>
@@ -70,36 +77,37 @@ export default {
                     title: 'الرئيسية',
                     icon: 'home',
                     url: route('admin.dashboard'),
-                    isActive: this.getSegments() === 'dashboard'
+                    activeCheck: ['admin.dashboard']
                 },
                 //////////////////////////////////////////////
-                {
-                    title: 'المحاضرات',
-                    icon: 'monitor',
-                    url: null,
-                    subLinks: [
-                        {
-                            title: 'عرض الكل',
-                            url: null,
-                            isActive: this.getSegments() === 'webinars' && (!this.getSegments(2) || this.getSegments(2) === 'index')
-                        },
-                        {
-                            title: 'إضافة جديد',
-                            url: null,
-                            isActive: this.getSegments() === 'webinars' && this.getSegments(2) === 'create'
-                        },
-                    ]
-                },
+                /*       {
+                           title: 'المحاضرات',
+                           icon: 'monitor',
+                           url: null,
+                           subLinks: [
+                               {
+                                   title: 'عرض الكل',
+                                   url: null,
+                                   activeCheck: ['admin.webinars.index']
+                               },
+                               {
+                                   title: 'إضافة جديد',
+                                   url: null,
+                                   activeCheck: ['admin.webinars.create']
+                               },
+                           ]
+                       },*/
                 //////////////////////////////////////////////
                 {
                     title: 'الإعدادات',
                     icon: 'settings',
                     url: null,
+                    activeCheck: ['admin.countries.*'],
                     subLinks: [
                         {
                             title: 'الدول والمدن',
                             url: route('admin.countries.index'),
-                            isActive: this.getSegments() === 'countries'
+                            activeCheck: ['admin.countries.*']
                         },
                     ]
                 },
@@ -110,14 +118,28 @@ export default {
         }
     },
     methods: {
-        getSegments(index = 1) {
-            let link = this.$page.url
-            console.log(this.$page.url);
-            let split = link.split('/');
-            split.splice(split, 1); //unset /admin
+        isActive(index, subIndex = false) {
+            let currentUrl = this.$page.url.substr(1); //unused, but it's required to keep calling the method!
+            let activeCheck = [];
 
-            return split[index] ? split[index] : '';
-        },
+            if (subIndex === false) {
+                activeCheck = this.links[index].activeCheck;
+            } else {
+                activeCheck = this.links[index].subLinks[subIndex].activeCheck;
+            }
+
+            if (!activeCheck.length) {
+                return false
+            }
+
+            for (let i = 0; i < activeCheck.length; i++) {
+                if (route().current(activeCheck[i])) {
+                    return true;
+                }
+            }
+
+            // console.log(index, subIndex, route().current(activeCheck), route().current(), activeCheck);
+        }
     },
     mounted() {
         this.links = this.getLinks;
