@@ -51,7 +51,7 @@
                 </li>
 
                 <li :class="['nav-item']">
-                    <inertia-link class="d-flex align-items-center" :href="route('logout')" method="post" as="button">
+                    <inertia-link class="d-flex align-items-center" :href="route('logout')" method="post" as="a">
                         <i data-feather="log-out"></i>
                         <span class="menu-title text-truncate">تسجيل الخروج</span>
                     </inertia-link>
