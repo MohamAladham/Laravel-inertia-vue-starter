@@ -16,6 +16,7 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/vendors/css/vendors-rtl.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/fonts/font-awesome/css/font-awesome.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -31,6 +32,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/css-rtl/custom-rtl.css">
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/custom/css/style.css">
     <!-- END: Custom CSS-->
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -45,10 +47,10 @@
 @inertia
 
 @routes
-<script src="{{ mix('js/app.js') }}"></script>
 <!-- BEGIN: Vendor JS-->
 <script src="{{url('/')}}/assets/admin/vendors/js/vendors.min.js"></script>
 <!-- BEGIN Vendor JS-->
+<script src="{{ mix('js/app.js') }}"></script>
 
 <!-- BEGIN: Page Vendor JS-->
 <!-- END: Page Vendor JS-->
@@ -58,8 +60,7 @@
 <script src="{{url('/')}}/assets/admin/js/core/app.js"></script>
 <!-- END: Theme JS-->
 
-<!-- BEGIN: Page JS-->
-<!-- END: Page JS-->
+<script src="{{url('/')}}/assets/admin/custom/js/script.js"></script>
 
 <script>
     $(window).on('load', function () {

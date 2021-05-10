@@ -96,6 +96,19 @@ export default {
                     ]
                 },
                 //////////////////////////////////////////////
+                {
+                    title: 'الإعدادات',
+                    icon: 'settings',
+                    url: null,
+                    subLinks: [
+                        {
+                            title: 'الدول والمدن',
+                            url: route('admin.countries.index'),
+                            isActive: this.getSegments() === 'countries'
+                        },
+                    ]
+                },
+                //////////////////////////////////////////////
 
 
             ];

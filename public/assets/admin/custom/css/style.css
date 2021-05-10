@@ -1,0 +1,4 @@
+/*vuedraggable.js*/
+[data-draggable="true"] {
+    cursor: all-scroll;
+}

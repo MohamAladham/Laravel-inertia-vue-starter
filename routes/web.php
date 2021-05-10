@@ -24,8 +24,6 @@ Route::get( '/', function () {
     ] );
 } );
 
-Route::get( 'admin/dashboard', function () {
-    return Inertia::render( 'Admin/Dashboard' );
-} )->middleware( [ 'auth:admin' ] )->name( 'admin.dashboard' );
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin.php';
