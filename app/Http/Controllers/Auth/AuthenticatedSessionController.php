@@ -43,14 +43,16 @@ class AuthenticatedSessionController extends Controller
     public function store( LoginRequest $request, $guard = 'user' )
     {
         $request->authenticate( $guard );
-
         $request->session()->regenerate();
 
         //dd( \auth()->guard( $guard )->user()->toArray() );
 
         $redirect_to = $guard == 'admin' ? RouteServiceProvider::ADMIN_HOME : RouteServiceProvider::HOME;
 
-        return redirect()->intended( $redirect_to );
+        //  return redirect()->intended( $redirect_to );
+        $redirect_to = session()->get( 'url.intended' ) ? : $redirect_to;
+
+        return Inertia::location( $redirect_to );
     }
 
     /**
