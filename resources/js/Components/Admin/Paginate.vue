@@ -1,55 +1,69 @@
 <template>
-  <div
-    class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-  >
-    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-      <div>
-        <p class="text-sm text-gray-700">
-          Showing
-          <span class="font-medium">{{ from }}</span>
-          to
-          <span class="font-medium">{{ to }}</span>
-          of
-          <span class="font-medium">{{ total }}</span>
-          results
-        </p>
-      </div>
-      <div>
-        <inertia-link
-          v-if="previous"
-          :href="previous"
-          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-        >
-          Previous
-        </inertia-link>
-        <a
-          v-else
-          href="#"
-          class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-        >
-          Previous
-        </a>
-        <inertia-link
-          v-if="next"
-          :href="next"
-          class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-        >
-          Next
-        </inertia-link>
-        <a
-          v-else
-          href="#"
-          class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:text-gray-500"
-        >
-          Next
-        </a>
-      </div>
+
+    <div class="row mt-4">
+        <div class="col-sm-6">
+            <p>
+                يظهر من
+                <span class="font-medium">{{ items.from }}</span>
+                إلى
+                <span class="font-medium">{{ items.to }}</span>
+                من أصل
+                <span class="font-medium">{{ items.total }}</span>
+                عنصر
+            </p>
+        </div>
+        <div class="col-sm-6">
+            <nav>
+                <ul class="pagination justify-content-end">
+                    <li v-if="previous" class="page-item prev-item">
+                        <inertia-link :href="prepareLink(items.prev_page_url)" class="page-link"></inertia-link>
+                    </li>
+
+                    <template v-for="(link, index) in items.links">
+                        <li
+                            v-if="index !==0 && index!==items.links.length-1"
+                            class="page-item"
+                            :class="{'active':link.active}">
+                            <inertia-link :href="prepareLink(link.url)" class="page-link">{{ link.label }}</inertia-link>
+                        </li>
+                    </template>
+
+                    <li v-if="next" class="page-item next-item">
+                        <inertia-link :href="prepareLink(items.next_page_url)" class="page-link"></inertia-link>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-  </div>
+
 </template>
+
 
 <script>
 export default {
-  props: ["from", "to", "total", "previous", "next"],
+    props: ["items"],
+    methods: {
+        prepareLink(link) {
+            //append GET parameters
+            const paramsCurrent = new URLSearchParams(window.location.search)
+            let i = 0;
+            paramsCurrent.forEach(function (value, key) {
+                if (i === 0) {
+                    if (!link.indexOf('?')) {
+                        link += '?' + key + '=' + value;
+                    } else {
+                        link += '&' + key + '=' + value;
+                    }
+                } else {
+                    link += '&' + key + '=' + value;
+                }
+
+                //console.log(value, key);
+                i++;
+            })
+
+            return link;
+        }
+    }
 };
 </script>

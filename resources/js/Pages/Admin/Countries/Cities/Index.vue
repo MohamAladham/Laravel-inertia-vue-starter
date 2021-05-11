@@ -54,19 +54,12 @@
                                 </tr>
                             </template>
                         </draggable>
-
                     </table>
-
-                    <Paginate
-                        v-if="items.data.length && items.total > items.per_page"
-                        :from="items.from"
-                        :to="items.to"
-                        :total="items.total"
-                        :previous="items.prev_page_url"
-                        :next="items.next_page_url"
-                    />
-
                 </div>
+                <Paginate
+                    v-if="items.data.length && items.total > items.per_page"
+                    :items="items"
+                />
                 <div v-else class="alert alert-info">
                     لم يتم العثور على نتائج..
                 </div>

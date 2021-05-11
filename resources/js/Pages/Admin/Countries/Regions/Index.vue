@@ -43,7 +43,9 @@
                                     </td>
 
                                     <td class="text-center">
-                                        <span class="badge badge-info"><inertia-link :href="route('admin.countries.regions.cities.index', [country,element])">{{ element.cities_count }}</inertia-link></span>
+                                     <inertia-link :href="route('admin.countries.regions.cities.index', [country,element])">
+                                         <span class="badge badge-info">{{ element.cities_count }}</span>
+                                     </inertia-link>
                                     </td>
 
                                     <td class="text-center">
@@ -64,19 +66,12 @@
                                 </tr>
                             </template>
                         </draggable>
-
                     </table>
-
-                    <Paginate
-                        v-if="items.data.length && items.total > items.per_page"
-                        :from="items.from"
-                        :to="items.to"
-                        :total="items.total"
-                        :previous="items.prev_page_url"
-                        :next="items.next_page_url"
-                    />
-
                 </div>
+                <Paginate
+                    v-if="items.data.length && items.total > items.per_page"
+                    :items="items"
+                />
                 <div v-else class="alert alert-info">
                     لم يتم العثور على نتائج..
                 </div>

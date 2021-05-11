@@ -22,7 +22,7 @@ class CountryController extends Controller
     public function index()
     {
         $data['items'] = Country::search()->withCount( 'regions' )
-            ->paginate( 100 );
+            ->paginate( 1 );
 
         $data['title'] = 'الدول';
 
