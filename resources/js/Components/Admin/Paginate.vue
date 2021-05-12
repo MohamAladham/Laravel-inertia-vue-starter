@@ -15,7 +15,7 @@
         <div class="col-sm-6">
             <nav>
                 <ul class="pagination justify-content-end">
-                    <li v-if="previous" class="page-item prev-item">
+                    <li v-if="items.prev_page_url" class="page-item prev-item">
                         <inertia-link :href="prepareLink(items.prev_page_url)" class="page-link"></inertia-link>
                     </li>
 
@@ -24,11 +24,13 @@
                             v-if="index !==0 && index!==items.links.length-1"
                             class="page-item"
                             :class="{'active':link.active}">
-                            <inertia-link :href="prepareLink(link.url)" class="page-link">{{ link.label }}</inertia-link>
+
+                            <inertia-link v-if="link.url" :href="prepareLink(link.url)" class="page-link">{{ link.label }}</inertia-link>
+                            <a v-else href="javascript:;" class="page-link">{{ link.label }}</a>
                         </li>
                     </template>
 
-                    <li v-if="next" class="page-item next-item">
+                    <li v-if="items.next_page_url" class="page-item next-item">
                         <inertia-link :href="prepareLink(items.next_page_url)" class="page-link"></inertia-link>
                     </li>
                 </ul>
@@ -48,6 +50,10 @@ export default {
             const paramsCurrent = new URLSearchParams(window.location.search)
             let i = 0;
             paramsCurrent.forEach(function (value, key) {
+                if (key === 'page') {
+                    return;
+                }
+
                 if (i === 0) {
                     if (!link.indexOf('?')) {
                         link += '?' + key + '=' + value;
