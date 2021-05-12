@@ -71,11 +71,8 @@
                     </table>
 
                 </div>
-                <Paginate
-                    v-if="items.data.length && items.total > items.per_page"
-                    :items="items"
-                />
-                <div v-else class="alert alert-info">
+                <Paginate v-if="items.data.length && items.total > items.per_page" :items="items"/>
+                <div v-if="!items.data.length" class="alert alert-info">
                     لم يتم العثور على نتائج..
                 </div>
             </template>
