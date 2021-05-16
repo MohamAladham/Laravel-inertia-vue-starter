@@ -1,3 +1,13 @@
+@font-face {
+    font-family: themeFont;
+    src: url(../fonts/AAJannatLT-.ttf);
+}
+
+body, p, h1, h2, h3, h4, h5, span {
+    font-family: themeFont, Tahoma;
+}
+
+
 /*vuedraggable.js*/
 [data-draggable="true"] {
     cursor: all-scroll;
