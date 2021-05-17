@@ -35,12 +35,26 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
+
+    /*
      *
-     * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function scopeSearch( $query )
+    {
+        if ( $q = request()->get( 'search' ) )
+        {
+            $query->where( function ( $sub ) use ( $q ) {
+                $sub->where( 'name', 'like', "%{$q}%" )
+                    ->orWhere( 'email', 'like', "%{$q}%" );
+            } );
+        }
+    }
+
+    /*
+     *
+     */
+    public function setPasswordAttribute( $value )
+    {
+        $this->attributes['password'] = bcrypt( $value );
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Countries\CountryController;
 use App\Http\Controllers\Admin\Countries\RegionCityController;
 use App\Http\Controllers\Admin\Countries\RegionController;
@@ -17,5 +18,7 @@ Route::middleware( 'auth:admin' )->name( 'admin.' )->prefix( 'admin' )->group( f
     Route::post( '/countries-regions-cities/order', [ RegionCityController::class, 'order' ] )->name( 'countries.regions.cities.order' );
     Route::get( '/countries-regions/get-regions-json/{countryId}', [ RegionController::class, 'getRegionsJson' ] )->name( 'countries.regions.get_regions_json' );
     Route::get( '/countries-regions-cities/get-cities-json/{regionId}', [ RegionCityController::class, 'getCitiesJson' ] )->name( 'countries.regions_cities.get_cities_json' );
+    Route::resource( 'admins', AdminController::class );
+
 } );
 

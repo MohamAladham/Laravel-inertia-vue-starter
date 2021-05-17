@@ -21,7 +21,7 @@
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
                 <li v-for="(link, index) in links" :key="link.title"
-                    :class="[isActive(index)?'active':'', link.subLinks&&isActive(index)?'sidebar-group-active open':'', link.subLinks?'has-sub':'','nav-item']">
+                    :class="[isActive(index) && !link.subLinks?'active':'', link.subLinks&&isActive(index)?'sidebar-group-active open':'', link.subLinks?'has-sub':'','nav-item']">
 
                     <template v-if="!link.subLinks">
                         <inertia-link class="d-flex align-items-center" :href="link.url">
@@ -78,6 +78,12 @@ export default {
                     icon: 'home',
                     url: route('admin.dashboard'),
                     activeCheck: ['admin.dashboard']
+                },
+                {
+                    title: 'المديرون',
+                    icon: 'users',
+                    url: route('admin.admins.index'),
+                    activeCheck: ['admin.admins.*']
                 },
                 //////////////////////////////////////////////
                 /*       {
