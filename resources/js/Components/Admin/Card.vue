@@ -1,15 +1,20 @@
 <template>
-  <div class="card">
-    <div class="card-header">
-        <slot name="header"/>
+    <div class="card">
+        <div v-if="hasHeaderSlot" class="card-header">
+            <slot name="header"/>
+        </div>
+        <div class="card-body">
+            <slot name="body"/>
+        </div>
     </div>
-    <div class="card-body">
-        <slot name="body"/>
-    </div>
-  </div>
 </template>
 <script>
 export default {
-  name: 'Card'
+    name: 'Card',
+    computed: {
+        hasHeaderSlot() {
+            return !!this.$slots.header
+        }
+    }
 }
 </script>
