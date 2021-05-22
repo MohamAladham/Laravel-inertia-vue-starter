@@ -1,28 +1,37 @@
 <template>
-    <div>
+    <div class="col-sm-12">
         <label v-if="label" class="form-label">{{ label }}:</label>
-        <div class="form-input p-0" :class="{ error: errors.length }">
+        <div class="row">
+            <input ref="file" type="file" :accept="accept" class="hidden" @change="change" v-bind="$attrs"/>
 
-            <div v-if="imgSrc">
-                <img :src="imgSrc" width="50">
+
+            <div v-if="preview" class="flot-right ml-1" style="margin-left:5px ">
+                <div v-if="isImg">
+                    <img ref="preview" :src="preview" width="60">
+                </div>
+                <div v-else>
+                    <a class="btn btn-info btn-sm" target="_blank" :href="preview">
+                        <i class="fas fa-file"></i>
+                        عرض الملف
+                    </a>
+                </div>
             </div>
 
-            <input ref="file" type="file" :accept="accept" class="hidden" @change="change" v-bind="$attrs"/>
-            <div v-if="!value" class="p-2">
-                <button type="button" class="px-4 py-1 bg-gray-500 hover:bg-gray-700 rounded-sm text-xs font-medium text-white" @click="browse">
-                    Browse
+            <div v-if="!value && !preview" class="col-12">
+                <button type="button" class="btn btn-sm btn-info" @click="browse">
+                    تحميل ملف
                 </button>
             </div>
-            <div v-else class="flex items-center justify-between p-2">
-                <div class="flex-1 pr-1">
-                    {{ value.name }} <span class="text-gray-500 text-xs">({{ filesize(value.size) }})</span>
+            <div v-else :class="[preview?'flot-right':'col-12']">
+                <div v-if="value && typeof value === 'object'">
+                    {{ value.name }} <span class="font-small-4 text-secondary">({{ filesize(value.size) }})</span>
                 </div>
-                <button type="button" class="px-4 py-1 bg-gray-500 hover:bg-gray-700 rounded-sm text-xs font-medium text-white" @click="remove">
-                    Remove
+                <button type="button" class="btn btn-sm btn-secondary" @click="remove">
+                    حذف
                 </button>
             </div>
         </div>
-        <div v-if="errors.length" class="font-small-3 text-danger">{{ errors[0] }}</div>
+        <div v-if="error" class="font-small-3 text-danger">{{ error }}</div>
     </div>
 </template>
 
@@ -31,20 +40,34 @@ export default {
     emits: ['update:value'],
     props: {
         value: File,
-        imgSrc: String,
+        preview: String,
+        isImg: {
+            type: Boolean,
+            default() {
+                return false;
+            }
+        },
         label: String,
         accept: String,
-        errors: {
-            type: Array,
-            default: () => [],
-        },
+        error: String,
     },
     watch: {
         value(value) {
             if (!value) {
                 this.$refs.file.value = ''
             }
+
+            let reader = new FileReader();
+            let this_ = this
+
+            if (this.isImg) {
+                reader.onload = function (e) {
+                    this_.$emit('update:preview', e.target.result);
+                }
+                reader.readAsDataURL(value);
+            }
         },
+
     },
     methods: {
         filesize(size) {
@@ -58,8 +81,15 @@ export default {
             this.$emit('update:value', e.target.files[0])
         },
         remove() {
+            this.$emit('update:preview', null)
             this.$emit('update:value', null)
         },
     },
+    computed: {
+        /*isImg() {
+            return (this.imgSrc && !!this.value && typeof this.value === 'object' && this.value.type.indexOf('image/') === 0)
+                || (this.imgSrc)
+        }*/
+    }
 }
 </script>
