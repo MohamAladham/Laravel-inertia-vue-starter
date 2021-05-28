@@ -15,6 +15,11 @@
                         <i class="fas fa-plus"></i>
                         إضافة جديد
                     </inertia-link>
+                    &nbsp;
+                    <a :href="route('admin.admins.export')" class="btn btn-sm btn-info">
+                        <i class="fas fa-file-excel"></i>
+                        تصدير البيانات
+                    </a>
                 </div>
             </template>
             <template #body>

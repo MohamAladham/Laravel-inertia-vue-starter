@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AdminsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -117,5 +119,11 @@ class AdminController extends Controller
         return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الحذف!' );
     }
 
-
+    /*
+     *
+     */
+    public function export()
+    {
+        return Excel::download( new AdminsExport, 'admins_' . time() . '.xlsx' );
+    }
 }
