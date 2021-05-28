@@ -40,10 +40,9 @@
                                     <!-- general tab -->
                                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
                                         <div class="row">
-
                                             <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المدير"/>
                                             <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"/>
-
+                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="errors.photo" label="الصورة الشخصية"/>
                                         </div>
                                     </div>
                                     <!--/ general tab -->
@@ -80,6 +79,7 @@
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
 import TextInput from "@/Components/Admin/Inputs/TextInput"
+import FileInput from "@/Components/Admin/Inputs/FileInput"
 import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
 import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
 import Card from "@/Components/Admin/Card";
@@ -87,7 +87,7 @@ import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
     layout: AdminLayout,
-    components: {SubmitButton, TextInput, PageHead, Card, Breadcrumb},
+    components: {SubmitButton, TextInput, FileInput, PageHead, Card, Breadcrumb},
     props: {
         title: '',
         item: {},
@@ -103,22 +103,25 @@ export default {
             form: this.$inertia.form({
                 name: this.item?.name ?? '',
                 email: this.item?.email ?? '',
+                photo: null,
+                photoPreview: this.item?.photo ?? '',
                 password: '',
                 password_confirmation: '',
+                _method: this.item ? 'put' : 'post',
             }),
 
         }
     },
     methods: {
         submit() {
+            let url_ = '';
+
             if (this.item) {
-                this.submitUpdate();
+                url_ = route('admin.admins.update', this.item);
             } else {
-                this.submitStore();
+                url_ = route('admin.admins.store');
             }
-        },
-        submitStore() {
-            let url_ = route('admin.admins.store');
+
             this.form.post(url_, {
                 onStart: visit => {
                     this.submitIsLoading = true;
@@ -134,24 +137,6 @@ export default {
                 },
             })
         },
-        submitUpdate() {
-            let url_ = route('admin.admins.update', this.item);
-            this.form.put(url_, {
-                onStart: visit => {
-                    this.submitIsLoading = true;
-                },
-                onSuccess(page) {
-                    generalOnSuccess();
-                },
-                onError: errors => {
-                    console.log(errors);
-                },
-                onFinish: visit => {
-                    this.submitIsLoading = false;
-                },
-            })
-        },
-
     },
 }
 </script>

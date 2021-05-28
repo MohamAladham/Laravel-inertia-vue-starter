@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -48,7 +49,13 @@ class AdminController extends Controller
      */
     public function store( AdminRequest $request )
     {
-        Admin::create( $request->validated() );
+        $arr = $request->validated();
+        if ( $image = request()->file( 'photo' ) )
+        {
+            $arr['photo'] = Storage::disk( 'public' )->putFile( 'uploads/admins', $image );
+        }
+
+        Admin::create( $arr );
 
         return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الإضافة بنجاح!' );
     }
@@ -79,6 +86,17 @@ class AdminController extends Controller
         if ( !$arr['password'] )
         {
             unset( $arr['password'] );
+        }
+
+        if ( $image = request()->file( 'photo' ) )
+        {
+            $arr['photo'] = Storage::disk( 'public' )->putFile( 'uploads/admins', $image );
+        } elseif ( !$arr['photoPreview'] )
+        {
+            $arr['photo'] = NULL;
+        } else
+        {
+            unset( $arr['photo'] );
         }
 
         $admin->update( $arr );

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class Admin extends Authenticatable
 {
@@ -23,6 +24,7 @@ class Admin extends Authenticatable
         'name',
         'email',
         'password',
+        'photo',
     ];
 
     /**
@@ -35,6 +37,7 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
+    protected $appends = [ 'photo' ];
 
     /*
      *
@@ -57,4 +60,10 @@ class Admin extends Authenticatable
     {
         $this->attributes['password'] = bcrypt( $value );
     }
+
+    public function getPhotoAttribute()
+    {
+        return $this->attributes['photo'] ? url( Storage::url( $this->attributes['photo'] ) ) : NULL;
+    }
+
 }

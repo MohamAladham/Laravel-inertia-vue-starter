@@ -37,7 +37,10 @@
                         <tbody>
                         <tr v-for="item in items.data">
                             <td>
-                                {{ item.name }}
+                                <inertia-link :href="route('admin.admins.edit', item.id)">
+                                    <img :src="item.photo" class="rounded-circle" style="width:40px; height: 40px; margin-left: 3px"/>
+                                    {{ item.name }}
+                                </inertia-link>
                             </td>
 
                             <td class="">
