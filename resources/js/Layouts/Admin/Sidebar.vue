@@ -80,6 +80,12 @@ export default {
                     activeCheck: ['admin.dashboard']
                 },
                 {
+                    title: 'المستخدمون',
+                    icon: 'users',
+                    url: route('admin.users.index'),
+                    activeCheck: ['admin.users.*']
+                },
+                {
                     title: 'المديرون',
                     icon: 'users',
                     url: route('admin.admins.index'),
