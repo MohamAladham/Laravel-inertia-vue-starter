@@ -63,7 +63,7 @@ class Admin extends Authenticatable
 
     public function getPhotoAttribute()
     {
-        return $this->attributes['photo'] ? url( Storage::url( $this->attributes['photo'] ) ) : NULL;
+        return $this->attributes['photo'] ? url( Storage::url( $this->attributes['photo'] ) ) : asset( 'assets/admin/custom/img/avatar.png' );
     }
 
 }
