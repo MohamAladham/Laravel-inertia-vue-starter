@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
+use App\Models\Country\Country;
 use App\Models\User;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,6 @@ class UserController extends Controller
     {
         $data['items'] = User::search()
             ->paginate( 20 );
-
         $data['title'] = 'المستخدمون';
 
         return Inertia::render( $this->viewPrefix . 'Index', $data );
@@ -38,7 +38,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $data['title'] = 'إضافة مستخدم جديد';
+        $data['countries'] = Country::get( [ 'id', 'name' ] );
+        $data['title']     = 'إضافة مستخدم جديد';
 
         return Inertia::render( $this->viewPrefix . 'Form', $data );
     }
@@ -57,7 +58,10 @@ class UserController extends Controller
             $arr['photo'] = Storage::disk( 'public' )->putFile( 'uploads/users', $image );
         }
 
-        User::create( $arr );
+        $user = User::create( $arr );
+        $user->country()->associate( $arr['country_id'] );
+        $user->region()->associate( $arr['region_id'] );
+        $user->city()->associate( $arr['city_id'] );
 
         return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الإضافة بنجاح!' );
     }
@@ -66,10 +70,12 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function edit( User $user )
+    public function edit( $id )
     {
-        $data['title'] = $user->name;
-        $data['item']  = $user;
+        $data['countries'] = Country::get( [ 'id', 'name' ] );
+        $user              = User::with( 'country', 'country.regions', 'region.cities' )->findOrFail( $id );
+        $data['title']     = $user->name;
+        $data['item']      = $user;
 
         return Inertia::render( $this->viewPrefix . 'Form', $data );
     }
@@ -101,6 +107,9 @@ class UserController extends Controller
             unset( $arr['photo'] );
         }
 
+        $user->country()->associate( $arr['country_id'] );
+        $user->region()->associate( $arr['region_id'] );
+        $user->city()->associate( $arr['city_id'] );
         $user->update( $arr );
 
         return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تم التعديل بنجاح' );

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Country\Country;
+use App\Models\Country\CountryRegion;
+use App\Models\Country\CountryRegionCity;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,6 +50,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /*
+     *
+     */
+    public function country()
+    {
+        return $this->belongsTo( Country::class );
+    }
+
+    /*
+     *
+     */
+    public function region()
+    {
+        return $this->belongsTo( CountryRegion::class );
+    }
+
+
+    /*
+     *
+     */
+    public function city()
+    {
+        return $this->belongsTo( CountryRegionCity::class );
+    }
 
 
     /*

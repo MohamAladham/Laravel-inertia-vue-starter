@@ -1,14 +1,16 @@
 <template>
-    <div>
-        <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
-        <select :id="id" ref="input" v-bind="$attrs" class="form-select" :class="{ 'border-danger': error }"
-                @input="$emit('update:value', $event.target.value)"
-        >
-            <slot/>
-        </select>
-        <p class="font-small-3 text-danger" v-if="error">
-            {{ error }}
-        </p>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
+            <select :id="id" ref="input" v-bind="$attrs" class="form-control" :class="{ 'border-danger': error }"
+                    @input="$emit('update:value', $event.target.value)"
+            >
+                <slot/>
+            </select>
+            <p class="font-small-3 text-danger" v-if="error">
+                {{ error }}
+            </p>
+        </div>
     </div>
 </template>
 

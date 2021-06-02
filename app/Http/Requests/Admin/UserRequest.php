@@ -31,8 +31,11 @@ class UserRequest extends FormRequest
             'name'         => [ 'required', 'string', 'max:100' ],
             'email'        => [ 'required', 'email', 'max:100', Rule::unique( 'users' )->ignore( $id ) ],
             'password'     => [ 'required', 'confirmed', Password::min( 8 )->letters()->numbers()->uncompromised() ],
-            'photo'        => [  'nullable' ],//'image',
+            'photo'        => [ 'nullable', 'image' ],
             'photoPreview' => [ 'string', 'nullable' ],
+            'country_id'   => [ 'required', 'int', 'exists:countries,id' ],
+            'region_id'    => [ 'required', 'int', 'exists:country_regions,id' ],
+            'city_id'      => [ 'required', 'int', 'exists:country_region_cities,id' ],
         ];
 
         if ( $id )

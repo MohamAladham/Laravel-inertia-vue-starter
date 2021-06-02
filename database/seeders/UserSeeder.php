@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Country\Country;
+use App\Models\Country\CountryRegion;
+use App\Models\Country\CountryRegionCity;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +23,9 @@ class UserSeeder extends Seeder
         $user->password = Hash::make( '123123123' );
         $user->email    = 'm1aladham@gmail.com';
         $user->name     = 'محمد الأدهم';
+        $user->country()->associate( Country::find( 1 ) );
+        $user->region()->associate( CountryRegion::find( 1 ) );
+        $user->city()->associate( CountryRegionCity::find( 1 ) );
         $user->save();
     }
 }
