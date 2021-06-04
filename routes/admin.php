@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware( 'auth:admin' )->name( 'admin.' )->prefix( 'admin' )->group( function () {
+    Route::get( '/', [ DashboardController::class, 'index' ] )->name( 'admin' );
     Route::get( '/dashboard', [ DashboardController::class, 'index' ] )->name( 'dashboard' );
     Route::resource( 'countries', CountryController::class );
     Route::post( '/countries/order', [ CountryController::class, 'order' ] )->name( 'countries.order' );

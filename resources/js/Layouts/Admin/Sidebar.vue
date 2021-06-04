@@ -77,7 +77,7 @@ export default {
                     title: 'الرئيسية',
                     icon: 'home',
                     url: route('admin.dashboard'),
-                    activeCheck: ['admin.dashboard']
+                    activeCheck: ['admin.dashboard', 'admin.admin']
                 },
                 {
                     title: 'المستخدمون',

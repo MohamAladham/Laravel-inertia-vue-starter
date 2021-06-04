@@ -22,7 +22,7 @@ class HandleInertiaRequests extends Middleware
         )
         {
             $this->rootView = 'admin_auth';
-        } elseif ( request()->is( 'admin/*' ) )
+        } elseif ( request()->is( 'admin/*' ) || request()->is( 'admin' ) )
         {
             $this->rootView = 'admin';
         } else
