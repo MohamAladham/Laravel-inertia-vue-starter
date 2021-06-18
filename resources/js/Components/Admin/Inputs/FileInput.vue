@@ -53,8 +53,9 @@ export default {
     },
     watch: {
         value(value) {
-            if (!value) {
+            if (!value || typeof value !== 'object') {
                 this.$refs.file.value = ''
+                return;
             }
 
             let reader = new FileReader();

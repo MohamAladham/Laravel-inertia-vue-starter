@@ -51,10 +51,11 @@ class HandleInertiaRequests extends Middleware
     public function share( Request $request )
     {
         return array_merge( parent::share( $request ), [
-            'auth'    => [
+            'auth'           => [
                 'user' => $request->user( 'user' ) ? : $request->user( 'admin' ) ? : NULL,
             ],
-            'appName' => config( 'app.name' ),
+            'appName'        => get_setting( 'site_title', 'اسم النظام' ),
+            'adminPanelLogo' => get_setting( 'admin_panel_logo', asset( 'assets/admin/custom/img/logo_placeholder.png' ) ),
         ] );
     }
 }

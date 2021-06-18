@@ -37,6 +37,10 @@
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+    <script>
+        var site_url = "{{url('/')}}";
+    </script>
+
 </head>
 <!-- END: Head-->
 

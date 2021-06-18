@@ -6,7 +6,7 @@
                 <li class="nav-item mr-auto">
                     <inertia-link class="navbar-brand" :href="route('admin.dashboard')">
                         <span class="brand-logo">
-                             <img src="/assets/admin/images/logo/logo.png">
+                             <img :src="this.$page.props.adminPanelLogo">
                         </span>
                         <h2 class="brand-text">{{ this.$page.props.appName }}</h2>
                     </inertia-link>
@@ -114,8 +114,13 @@ export default {
                     title: 'الإعدادات',
                     icon: 'settings',
                     url: null,
-                    activeCheck: ['admin.countries.*'],
+                    activeCheck: ['admin.settings.*', 'admin.countries.*'],
                     subLinks: [
+                        {
+                            title: 'الإعدادات العامة',
+                            url: route('admin.settings.general'),
+                            activeCheck: ['admin.settings.general']
+                        },
                         {
                             title: 'الدول والمدن',
                             url: route('admin.countries.index'),
