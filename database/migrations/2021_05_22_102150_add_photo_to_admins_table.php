@@ -25,6 +25,7 @@ class AddPhotoToAdminsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table( 'admins', function ( Blueprint $table ) {
             //
         } );

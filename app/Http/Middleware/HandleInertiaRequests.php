@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Middleware;
 
@@ -50,9 +51,16 @@ class HandleInertiaRequests extends Middleware
      */
     public function share( Request $request )
     {
+        $user = NULL;
+
+        if ( Auth::check() )
+        {
+            $user = $request->user( 'user' ) ? : $request->user( 'admin' ) ? : NULL;
+        }
+
         return array_merge( parent::share( $request ), [
             'auth'           => [
-                'user' => $request->user( 'user' ) ? : $request->user( 'admin' ) ? : NULL,
+                'user' => $user,
             ],
             'appName'        => get_setting( 'site_title', 'اسم النظام' ),
             'adminPanelLogo' => get_setting( 'admin_panel_logo', asset( 'assets/admin/custom/img/logo_placeholder.png' ) ),

@@ -27,6 +27,7 @@ class AddCountryToUsersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table( 'users', function ( Blueprint $table ) {
             //
         } );

@@ -15,10 +15,10 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $user = new Admin();
-        $user->password = Hash::make('admin');
-        $user->email = 'admin@gmail.com';
-        $user->name = 'مدير النظام';
+        $user           = new Admin();
+        $user->password = 'admin';
+        $user->email    = 'm1aladham@gmail.com';
+        $user->name     = 'مدير النظام';
         $user->save();
     }
 }

@@ -29,6 +29,7 @@ class CreateCountriesRegionsCitiesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists( 'country_region_cities' );
     }
 }

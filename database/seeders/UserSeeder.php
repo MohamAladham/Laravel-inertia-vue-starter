@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user           = new User();
-        $user->password = Hash::make( '123123123' );
+        $user->password = '123123123';
         $user->email    = 'm1aladham@gmail.com';
         $user->name     = 'محمد الأدهم';
         $user->country()->associate( Country::find( 1 ) );

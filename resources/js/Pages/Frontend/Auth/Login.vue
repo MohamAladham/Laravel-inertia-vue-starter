@@ -28,7 +28,7 @@
                                 <input
                                     type="password"
                                     :class="{ 'border-danger': form.errors.password}"
-                                    :value="form.password"
+                                    v-model="form.password"
                                     class="form-control form-control-merge"
                                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                     tabindex="2"
