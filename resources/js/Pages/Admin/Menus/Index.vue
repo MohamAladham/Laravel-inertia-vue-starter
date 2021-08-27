@@ -1,0 +1,181 @@
+<template>
+
+    <page-head :title="title"/>
+    <Breadcrumb :title="title" :links="breadcrumbLinks"/>
+
+    <div class="content-body">
+
+        <div class="text-right">
+            <a @click="openCreateModal(0)" class="btn btn-sm btn-primary">
+                <i class="fas fa-plus"></i>
+                إضافة جديد
+            </a>
+        </div>
+
+        <div v-if="items">
+
+            <div class="row">
+                <div class="col-sm-6 offset-sm-3">
+                    <div class="collapse-shadow collapse-icon bg-white mt-2 mb-5">
+                        <draggable v-model="items" item-key="id" :animation="200" @end="endSorting()">
+                            <template #item="{element}">
+                                <div
+                                    @mouseover="$refs['controlButtons'+ element.id].classList.remove('d-none')"
+                                    @mouseleave="$refs['controlButtons'+ element.id].classList.add('d-none')"
+                                    :style="{opacity: element.is_active?'1':'0.6'}"
+                                >
+
+                                    <div :id="'heading' + element.id" class="card-header" data-toggle="collapse" role="button" :data-target="'#accordion'+element.id" aria-expanded="false" :aria-controls="'accordion'+element.id">
+                                        <span class="lead collapse-title"> {{ element.title }} </span>
+
+                                        <div class="dropdown_control text-right float-right mr-2 d-none" :ref="'controlButtons' + element.id">
+                                            <div class="dropdown chart-dropdown">
+                                                <i class="fas fa-ellipsis-v cursor-pointer" data-toggle="dropdown"></i>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" @click.stop.prevent="openCreateModal(element.id)" href="javascript:;">
+                                                        إضافة رابط فرعي
+                                                    </a>
+                                                    <a class="dropdown-item" @click.stop.prevent="getItem(element.id)" href="javascript:;">
+                                                        تعديل
+                                                    </a>
+                                                    <a class="dropdown-item" @click.stop.prevent="openDeleteModal(element.id)">
+                                                        حذف
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div :id="'accordion'+element.id" role="tabpanel" :aria-labelledby="'heading'+element.id" class="collapse">
+                                        <div class="card-body">
+
+                                            <table class="table">
+                                                <draggable v-model="element.sub_menus" tag="tbody" item-key="id" :animation="200" @end="endSorting()">
+                                                    <template #item="{element}">
+                                                        <tr @mouseover="$refs['subControlButtons'+ element.id].classList.remove('d-none')"
+                                                            @mouseleave="$refs['subControlButtons'+ element.id].classList.add('d-none')"
+                                                            :style="{opacity: element.is_active?'1':'0.6'}"
+                                                        >
+                                                            <td>
+                                                                {{ element.title }}
+                                                            </td>
+                                                            <td>
+                                                                <div class="dropdown_control text-right float-right mr-2 d-none" :ref="'subControlButtons' + element.id">
+                                                                    <div class="dropdown chart-dropdown">
+                                                                        <i class="fas fa-ellipsis-v cursor-pointer" data-toggle="dropdown"></i>
+                                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                                            <a class="dropdown-item" @click.stop.prevent="getItem(element.id)" href="javascript:;">
+                                                                                تعديل
+                                                                            </a>
+                                                                            <a class="dropdown-item" @click.stop.prevent="openDeleteModal(element.id)">
+                                                                                حذف
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </draggable>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </template>
+                        </draggable>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div v-if="!items" class="alert alert-info">
+            لم يتم العثور على نتائج..
+        </div>
+
+    </div>
+
+
+    <!--    modal-->
+    <edit :form="editItemForm" :errors="errors"/>
+    <create :parent_id="parent_id"/>
+    <confirm-modal @confirm="deleteItem"/>
+
+
+</template>
+
+
+<script>
+import AdminLayout from "@/Layouts/Admin/Layout";
+import Edit from "@/Pages/Admin/Menus/Edit";
+import Create from "@/Pages/Admin/Menus/Create";
+import ConfirmModal from "@/Components/Admin/ConfirmModal";
+import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
+import Card from "@/Components/Admin/Card";
+import Paginate from "@/Components/Admin/Paginate";
+import draggable from "vuedraggable";
+import PageHead from "@/Layouts/Admin/PageHead";
+
+export default {
+    layout: AdminLayout,
+    props: ["items", 'errors', 'title'],
+    components: {PageHead, Card, Breadcrumb, ConfirmModal, Create, Edit, Paginate, draggable},
+    data() {
+        return {
+            editItemForm: this.$inertia.form({
+                title: '',
+                url: '',
+                is_active: '',
+                parent_id: 0,
+                id: '',
+            }),
+
+            parent_id: 0,
+            deleteItemId: null,
+            breadcrumbLinks: []
+        };
+    },
+    methods: {
+        openCreateModal(parent_id) {
+            this.parent_id = parent_id;
+            $('#createModal').modal('show');
+        },
+
+        openDeleteModal(itemId) {
+            $('#confirmModal').modal('show');
+            this.deleteItemId = itemId;
+        },
+        deleteItem() {
+            this.$inertia.delete(route("admin.menus.destroy", this.deleteItemId), {
+                onSuccess: page => {
+                    generalOnSuccess('تم حذف السجل بنجاح!');
+                    $('#confirmModal').modal('hide');
+                }
+            });
+        },
+
+        getItem(id, event) {
+            let url = route('admin.menus.edit', id)
+            axios.get(url).then((res) => {
+                this.editItemForm = {...this.editItemForm, ...res.data}
+                $('#editModal').modal('show');
+            })
+        },
+        endSorting() {
+            let url = route('admin.menus.order');
+            this.$inertia.post(url, {items: this.items}, {
+                onSuccess() {
+                    generalOnSuccess('تم حفظ الترتيب بنجاح.');
+                }
+            })
+        }
+    },
+};
+</script>
+
+<style scoped>
+.dropdown_control i {
+    padding: 5px 8px;
+}
+</style>

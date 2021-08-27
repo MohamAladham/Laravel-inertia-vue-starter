@@ -122,6 +122,11 @@ export default {
                             activeCheck: ['admin.settings.general']
                         },
                         {
+                            title: 'إعدادات القوائم',
+                            url: route('admin.menus.index'),
+                            activeCheck: ['admin.menus.*']
+                        },
+                        {
                             title: 'الدول والمدن',
                             url: route('admin.countries.index'),
                             activeCheck: ['admin.countries.*']

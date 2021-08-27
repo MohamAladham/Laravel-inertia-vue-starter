@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Countries\CountryController;
 use App\Http\Controllers\Admin\Countries\RegionCityController;
 use App\Http\Controllers\Admin\Countries\RegionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,9 @@ Route::middleware( 'auth:admin' )->name( 'admin.' )->prefix( 'admin' )->group( f
     Route::get( '/settings/general', [ SettingController::class, 'general' ] )->name( 'settings.general' );
     Route::post( '/settings/update-general', [ SettingController::class, 'updateGeneral' ] )->name( 'settings.update_general' );
     /***** /SETTINGS *****/
+
+    Route::resource( 'menus', MenuController::class );
+    Route::post( '/menus/order', [ MenuController::class, 'order' ] )->name( 'menus.order' );
+
 } );
 
