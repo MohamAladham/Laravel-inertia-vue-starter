@@ -64,6 +64,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'appName'        => get_setting( 'site_title', 'اسم النظام' ),
             'adminPanelLogo' => get_setting( 'admin_panel_logo', asset( 'assets/admin/custom/img/logo_placeholder.png' ) ),
+            'error'          => $request->session()->get( 'error' ),
+            'success'        => $request->session()->get( 'success' ),
         ] );
     }
 }

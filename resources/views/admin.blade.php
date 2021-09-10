@@ -30,6 +30,10 @@
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/css-rtl/core/menu/menu-types/vertical-menu.css">
     <!-- END: Page CSS-->
 
+    <!-- Sweet Alert-->
+    <link href="{{url('/')}}/assets/admin/vendors/js/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+
+
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/css-rtl/custom-rtl.css">
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/custom/css/style.css">
@@ -63,6 +67,9 @@
 <script src="{{url('/')}}/assets/admin/js/core/app-menu.js"></script>
 <script src="{{url('/')}}/assets/admin/js/core/app.js"></script>
 <!-- END: Theme JS-->
+
+<!-- Sweet Alerts js -->
+<script src="{{url('/')}}/assets/admin/vendors/js/sweetalert2/sweetalert2.min.js"></script>
 
 <script src="{{url('/')}}/assets/admin/custom/js/script.js"></script>
 
