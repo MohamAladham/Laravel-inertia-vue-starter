@@ -14,6 +14,13 @@ use Mavinoo\Batch\Batch;
 
 class CountryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware( "check_permission:country_manage" );
+    }
+
+
     /**
      * Display a listing of the resource.
      *

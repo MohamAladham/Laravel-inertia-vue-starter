@@ -6,6 +6,7 @@ use App\Exports\AdminsExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AdminRequest;
 use App\Models\Admin;
+use App\Models\Role\Role;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -16,6 +17,13 @@ class AdminController extends Controller
     private string $viewPrefix = "Admin/Admins/";
     private string $routePrefix = "admin.admins.";
 
+    public function __construct()
+    {
+        $this->middleware( "check_permission:admin_show", [ 'only' => [ 'index', 'export' , 'edit'] ] );
+        $this->middleware( "check_permission:admin_update", [ 'only' => [ 'create', 'store', 'update' ] ] );
+        $this->middleware( "check_permission:admin_delete", [ 'only' => [ 'destroy' ] ] );
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +31,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $data['items'] = Admin::search()
+        $data['items'] = Admin::with( 'roles' )->search()
             ->paginate( 20 );
 
         $data['title'] = 'المديرون';
@@ -57,7 +65,8 @@ class AdminController extends Controller
             $arr['photo'] = Storage::disk( 'public' )->putFile( 'uploads/admins', $image );
         }
 
-        Admin::create( $arr );
+        $admin = Admin::create( $arr );
+        $admin->roles()->sync( $request->roles );
 
         return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الإضافة بنجاح!' );
     }
@@ -66,10 +75,13 @@ class AdminController extends Controller
      * Show the form for editing the specified resource.
      *
      */
-    public function edit( Admin $admin )
+    public function edit( $id )
     {
-        $data['title'] = $admin->name;
-        $data['item']  = $admin;
+        $admin               = Admin::findOrFail( $id );
+        $data['title']       = $admin->name;
+        $data['item']        = $admin;
+        $data['admin_roles'] = $admin->roles->pluck( 'id' );
+        $data['roles']       = Role::get();
 
         return Inertia::render( $this->viewPrefix . 'Form', $data );
     }
@@ -101,6 +113,7 @@ class AdminController extends Controller
             unset( $arr['photo'] );
         }
 
+        $admin->roles()->sync( $request->roles );
         $admin->update( $arr );
 
         return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تم التعديل بنجاح' );

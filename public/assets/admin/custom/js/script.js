@@ -17,7 +17,7 @@ function generalOnSuccess(text = '', heading = '', callback = undefined, autoDis
             if (callback !== undefined) {
                 callback();
             }
-        }, 2000);
+        }, 1500);
     }
 }
 
@@ -55,3 +55,17 @@ function confirm(text = '', callback) {
         }
     });
 }
+
+function initSelect2() {
+    $('.select2').select2();
+}
+
+
+$(document).ready(function () {
+    initSelect2();
+});
+
+
+document.addEventListener('inertia:finish', (event) => {
+    initSelect2();
+})

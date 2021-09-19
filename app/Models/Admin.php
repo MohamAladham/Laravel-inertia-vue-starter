@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Role\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,6 +39,16 @@ class Admin extends Authenticatable
     ];
 
     protected $appends = [ 'photo' ];
+
+
+    /*
+     *
+     */
+    public function roles()
+    {
+        return $this->belongsToMany( Role::class, 'admin_role', 'admin_id', 'role_id', )->withTimestamps();
+    }
+
 
     /*
      *

@@ -32,8 +32,10 @@ class AdminRequest extends FormRequest
             'name'         => [ 'required', 'string', 'max:100' ],
             'email'        => [ 'required', 'email', 'max:100', Rule::unique( 'admins' )->ignore( $id ) ],
             'password'     => [ 'required', 'confirmed', Password::min( 8 )->letters()->numbers()->uncompromised() ],
-            'photo'        => [  'nullable' ],//'image',
+            'photo'        => [ 'nullable' ],//'image',
             'photoPreview' => [ 'string', 'nullable' ],
+            'roles'        => [ 'required' ],
+            'roles.*'      => [ 'required', 'integer' ],
         ];
 
         if ( $id )

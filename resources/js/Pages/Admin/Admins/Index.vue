@@ -11,7 +11,9 @@
                     <table-search :routeSearch="['admin.admins.index', {}]"/>
                 </div>
                 <div class="col-sm-9 text-right">
-                    <inertia-link :href="route('admin.admins.create')" class="btn btn-sm btn-primary">
+                    <inertia-link
+                        v-if="this.$page.props.auth.user.permissions.includes('admin_update')"
+                        :href="route('admin.admins.create')" class="btn btn-sm btn-primary">
                         <i class="fas fa-plus"></i>
                         إضافة جديد
                     </inertia-link>
@@ -31,6 +33,9 @@
                             <th class="">
                                 اسم المدير
                             </th>
+                            <th class="">
+                                الأدوار
+                            </th>
 
                             <th class="">
                                 البريد الإلكتروني
@@ -49,6 +54,15 @@
                             </td>
 
                             <td class="">
+                                <inertia-link
+                                    v-for="role in item.roles"
+                                    :href="route('admin.roles.edit', role.id)"
+                                    class="badge badge-secondary" style="margin-left: 4px;">
+                                    {{ role.name }}
+                                </inertia-link>
+                            </td>
+
+                            <td class="">
                                 {{ item.email }}
                             </td>
 
@@ -60,6 +74,7 @@
                                 </inertia-link>
                                 &nbsp;
                                 <a
+                                    v-if="this.$page.props.auth.user.permissions.includes('admin_delete')"
                                     @click="openDeleteModal(item.id)"
                                     class="btn btn-sm btn-danger"
                                 >

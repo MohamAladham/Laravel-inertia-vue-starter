@@ -32,7 +32,8 @@
 
     <!-- Sweet Alert-->
     <link href="{{url('/')}}/assets/admin/vendors/js/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
-
+    <!-- Select2 -->
+    <link href="{{url('/')}}/assets/admin/vendors/css/forms/select/select2.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/css-rtl/custom-rtl.css">
@@ -70,6 +71,8 @@
 
 <!-- Sweet Alerts js -->
 <script src="{{url('/')}}/assets/admin/vendors/js/sweetalert2/sweetalert2.min.js"></script>
+<!-- Select2 -->
+<script src="{{url('/')}}/assets/admin/vendors/js/forms/select/select2.full.min.js"></script>
 
 <script src="{{url('/')}}/assets/admin/custom/js/script.js"></script>
 

@@ -25,6 +25,13 @@
                                 <span class="font-weight-bold">كلمة المرور</span>
                             </a>
                         </li>
+                        <!-- change password -->
+                        <li class="nav-item">
+                            <a class="nav-link" id="account-pill-roles" data-toggle="pill" href="#account-vertical-roles" aria-expanded="false">
+                                <i data-feather="lock" class="font-medium-3 mr-1"></i>
+                                <span class="font-weight-bold">الأدوار والصلاحيات</span>
+                            </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -35,7 +42,9 @@
 
                     <card>
                         <template #body>
+
                             <form @submit.prevent="submit">
+
                                 <div class="tab-content">
                                     <!-- general tab -->
                                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
@@ -54,11 +63,21 @@
                                     </div>
                                     <!--/ change password -->
 
+                                    <!-- roles  -->
+                                    <div class="tab-pane fade" id="account-vertical-roles" role="tabpanel" aria-labelledby="account-pill-roles" aria-expanded="false">
+                                        <select2-input v-model:value="form.roles" :error="errors.roles" label="الأدوار" multiple>
+                                            <option v-for="role in roles" :key="role.id" :selected="form.roles.includes(role.id)" :value="role.id">{{ role.name }}</option>
+                                        </select2-input>
+                                    </div>
+                                    <!--/ change password -->
+
 
                                 </div>
 
                                 <div class="text-center mt-2">
-                                    <submit-button class="btn btn-primary" :is-loading="submitIsLoading">
+                                    <submit-button
+                                        v-if="this.$page.props.auth.user.permissions.includes('admin_update')"
+                                        class="btn btn-primary" :is-loading="submitIsLoading">
                                         حفظ البيانات
                                     </submit-button>
                                 </div>
@@ -80,6 +99,7 @@
 import AdminLayout from "@/Layouts/Admin/Layout";
 import TextInput from "@/Components/Admin/Inputs/TextInput"
 import FileInput from "@/Components/Admin/Inputs/FileInput"
+import Select2Input from "@/Components/Admin/Inputs/Select2Input"
 import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
 import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
 import Card from "@/Components/Admin/Card";
@@ -87,11 +107,13 @@ import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
     layout: AdminLayout,
-    components: {SubmitButton, TextInput, FileInput, PageHead, Card, Breadcrumb},
+    components: {SubmitButton, TextInput, FileInput, Select2Input, PageHead, Card, Breadcrumb},
     props: {
         title: '',
         item: {},
-        errors: {}
+        errors: {},
+        roles: [],
+        admin_roles: [],
     },
     data() {
         return {
@@ -107,9 +129,9 @@ export default {
                 photoPreview: this.item?.photo ?? '',
                 password: '',
                 password_confirmation: '',
+                roles: this.admin_roles,
                 _method: this.item ? 'put' : 'post',
             }),
-
         }
     },
     methods: {

@@ -17,6 +17,15 @@ class UserController extends Controller
     private string $viewPrefix = "Admin/Users/";
     private string $routePrefix = "admin.users.";
 
+
+    public function __construct()
+    {
+        $this->middleware( "check_permission:user_show", [ 'only' => [ 'index', 'export', 'edit' ] ] );
+        $this->middleware( "check_permission:user_update", [ 'only' => [ 'create', 'store', 'update' ] ] );
+        $this->middleware( "check_permission:user_delete", [ 'only' => [ 'destroy' ] ] );
+    }
+
+
     /**
      * Display a listing of the resource.
      *

@@ -1,0 +1,54 @@
+<template>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
+            <select :id="id" ref="input" v-bind="$attrs" class="form-control select2" :class="{ 'border-danger': error }"
+                    @change="$emit('update:value', $event.target.value)"
+            >
+                <slot/>
+            </select>
+            <p class="font-small-3 text-danger" v-if="error">
+                {{ error }}
+            </p>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    inheritAttrs: false,
+    emits: ['update:value'],
+    props: {
+        id: {
+            type: String,
+            default() {
+                // return `select-input-${this._uid}`
+            },
+        },
+        value: [String, Number, Boolean],
+        label: String,
+        error: String,
+    },
+
+    methods: {
+        focus() {
+            this.$refs.input.focus()
+        },
+        select() {
+            this.$refs.input.select()
+        },
+    },
+    mounted() {
+        var this_ = this;
+        var $input = $(this.$refs.input);
+
+        $(function () {
+            //to fix select2
+            $input.on('change', function (e) {
+                this_.$emit('update:value', $input.val());
+                this_.$emit('change')
+            });
+        });
+    }
+}
+</script>

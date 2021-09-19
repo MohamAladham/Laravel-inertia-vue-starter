@@ -10,6 +10,13 @@ use Inertia\Inertia;
 
 class MenuController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware( "check_permission:menu_manage" );
+    }
+
+
     /**
      * Display a listing of the resource.
      *

@@ -16,3 +16,38 @@ body, p, h1, h2, h3, h4, h5, span {
 [data-draggable="true"] {
     cursor: all-scroll;
 }
+
+
+.btn {
+    margin-right: 5px;
+}
+
+
+.card_results .card-body {
+    padding-top: 13px;
+    padding-bottom: 12px;
+}
+
+.card_results {
+    margin-bottom: 16px;
+}
+
+
+.card_results_head {
+    margin-bottom: 20px;
+    margin-top: 16px;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+}
+
+
+@media only screen and (max-width: 940px) {
+    .card_results_head, .card_results {
+        width: 313%;
+        overflow: scroll;
+    }
+
+    .card_results_container {
+        overflow: scroll;
+    }
+}

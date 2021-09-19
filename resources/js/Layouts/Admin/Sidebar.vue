@@ -24,7 +24,7 @@
                     :class="[isActive(index) && !link.subLinks?'active':'', link.subLinks&&isActive(index)?'sidebar-group-active open':'', link.subLinks?'has-sub':'','nav-item']">
 
                     <template v-if="!link.subLinks">
-                        <inertia-link class="d-flex align-items-center" :href="link.url">
+                        <inertia-link class="d-flex align-items-center" :href="link.url" v-if="checkPermission(link)">
                             <i :data-feather="link.icon"></i>
                             <span class="menu-title text-truncate">{{ link.title }}</span>
                             <span v-if="link.badge" class="badge badge-light-danger badge-pill ml-auto mr-1">{{ link.badge }}</span>
@@ -32,7 +32,7 @@
                     </template>
 
                     <template v-else>
-                        <a class="d-flex align-items-center" :href="link.url">
+                        <a class="d-flex align-items-center" :href="link.url" v-if="checkPermission(link)">
                             <i :data-feather="link.icon"></i>
                             <span class="menu-title text-truncate">{{ link.title }}</span>
                             <span v-if="link.badge" class="badge badge-light-danger badge-pill ml-auto mr-1">{{ link.badge }}</span>
@@ -40,7 +40,7 @@
 
                         <ul v-if="link.subLinks" class="menu-content">
                             <li v-for="(subLink, subIndex) in link.subLinks" :key="link.title + subLink.title" :class="isActive(index,subIndex)?'active':''">
-                                <inertia-link class="d-flex align-items-center" :href="subLink.url">
+                                <inertia-link class="d-flex align-items-center" :href="subLink.url" v-if="checkPermission(subLink)">
                                     <i data-feather="circle"></i>
                                     <span class="menu-item">{{ subLink.title }}</span>
                                 </inertia-link>
@@ -83,58 +83,57 @@ export default {
                     title: 'المستخدمون',
                     icon: 'users',
                     url: route('admin.users.index'),
-                    activeCheck: ['admin.users.*']
+                    activeCheck: ['admin.users.*'],
+                    permissions: ['user_show'],
                 },
                 {
                     title: 'المديرون',
                     icon: 'users',
                     url: route('admin.admins.index'),
-                    activeCheck: ['admin.admins.*']
+                    activeCheck: ['admin.admins.*', 'admin.roles.*'],
+                    permissions: ['admin_show', 'role_manage'],
+                    subLinks: [
+                        {
+                            title: 'عرض الكل',
+                            url: route('admin.admins.index'),
+                            activeCheck: ['admin.admins.*'],
+                            permissions: ['admin_show'],
+                        },
+                        {
+                            title: 'الأدوار والصلاحيات',
+                            url: route('admin.roles.index'),
+                            activeCheck: ['admin.roles.*'],
+                            permissions: ['role_manage'],
+                        },
+                    ]
                 },
-                //////////////////////////////////////////////
-                /*       {
-                           title: 'المحاضرات',
-                           icon: 'monitor',
-                           url: null,
-                           subLinks: [
-                               {
-                                   title: 'عرض الكل',
-                                   url: null,
-                                   activeCheck: ['admin.webinars.index']
-                               },
-                               {
-                                   title: 'إضافة جديد',
-                                   url: null,
-                                   activeCheck: ['admin.webinars.create']
-                               },
-                           ]
-                       },*/
-                //////////////////////////////////////////////
                 {
                     title: 'الإعدادات',
                     icon: 'settings',
                     url: null,
                     activeCheck: ['admin.settings.*', 'admin.countries.*'],
+                    permissions: ['setting_manage', 'menu_manage', 'country_manage'],
                     subLinks: [
                         {
                             title: 'الإعدادات العامة',
                             url: route('admin.settings.general'),
-                            activeCheck: ['admin.settings.general']
+                            activeCheck: ['admin.settings.general'],
+                            permissions: ['setting_manage'],
                         },
                         {
                             title: 'إعدادات القوائم',
                             url: route('admin.menus.index'),
-                            activeCheck: ['admin.menus.*']
+                            activeCheck: ['admin.menus.*'],
+                            permissions: ['menu_manage'],
                         },
                         {
                             title: 'الدول والمدن',
                             url: route('admin.countries.index'),
-                            activeCheck: ['admin.countries.*']
+                            activeCheck: ['admin.countries.*'],
+                            permissions: ['country_manage'],
                         },
                     ]
                 },
-                //////////////////////////////////////////////
-
 
             ];
         }
@@ -161,6 +160,23 @@ export default {
             }
 
             // console.log(index, subIndex, route().current(activeCheck), route().current(), activeCheck);
+        },
+
+        checkPermission(link) {
+            let this_ = this;
+            let permissions = link.permissions;
+
+            if (!permissions) {
+                return true;
+            }
+
+            for (let i = 0; i < permissions.length; i++) {
+                if (this_.$page.props.auth.user.permissions.includes(permissions[i])) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     },
     mounted() {
@@ -168,6 +184,3 @@ export default {
     },
 };
 </script>
-
-<style>
-</style>

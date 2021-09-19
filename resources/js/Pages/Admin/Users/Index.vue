@@ -11,7 +11,9 @@
                     <table-search :routeSearch="['admin.users.index', {}]"/>
                 </div>
                 <div class="col-sm-9 text-right">
-                    <inertia-link :href="route('admin.users.create')" class="btn btn-sm btn-primary">
+                    <inertia-link
+                        v-if="this.$page.props.auth.user.permissions.includes('user_update')"
+                        :href="route('admin.users.create')" class="btn btn-sm btn-primary">
                         <i class="fas fa-plus"></i>
                         إضافة جديد
                     </inertia-link>
@@ -60,6 +62,7 @@
                                 </inertia-link>
                                 &nbsp;
                                 <a
+                                    v-if="this.$page.props.auth.user.permissions.includes('user_delete')"
                                     @click="openDeleteModal(item.id)"
                                     class="btn btn-sm btn-danger"
                                 >

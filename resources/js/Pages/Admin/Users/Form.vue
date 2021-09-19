@@ -76,7 +76,9 @@
                                 </div>
 
                                 <div class="text-center mt-2">
-                                    <submit-button class="btn btn-primary" :is-loading="submitIsLoading">
+                                    <submit-button
+                                        v-if="this.$page.props.auth.user.permissions.includes('user_update')"
+                                        class="btn btn-primary" :is-loading="submitIsLoading">
                                         حفظ البيانات
                                     </submit-button>
                                 </div>

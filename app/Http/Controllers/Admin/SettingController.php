@@ -11,6 +11,13 @@ use Inertia\Inertia;
 class SettingController extends Controller
 {
 
+
+    public function __construct()
+    {
+        $this->middleware( "check_permission:setting_manage" );
+    }
+
+
     public function general(): \Inertia\Response
     {
         $data['settings'] = Setting::pluck( 'value', 'key' );

@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role\Permission;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -55,7 +57,18 @@ class HandleInertiaRequests extends Middleware
 
         if ( Auth::check() )
         {
-            $user = $request->user( 'user' ) ? : $request->user( 'admin' ) ? : NULL;
+            $user = $request->user( 'user' );
+
+            if ( $request->user( 'admin' ) )
+            {
+                $user = $request->user( 'admin' );
+                //get permissions
+                $user->permissions = Permission::whereHas( 'roles', function ( Builder $query ) use ( $user ) {
+                    $query->whereHas( 'admins', function ( Builder $users_query ) use ( $user ) {
+                        $users_query->where( 'admins.id', '=', $user->id );
+                    } );
+                } )->pluck( 'name' );
+            }
         }
 
         return array_merge( parent::share( $request ), [
