@@ -30,12 +30,22 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data['items'] = Role::latest()->paginate( 100 );
-
         $data['title'] = 'الأدوار والصلاحيات';
 
         return Inertia::render( $this->viewPrefix . 'Index', $data );
     }
+
+
+    /*
+     *
+     */
+    public function fetchItems()
+    {
+        $data['items'] = Role::latest()->paginate( 100 );
+
+        return response()->json( [ 'items' => $data['items'] ] );
+    }
+
 
     /**
      * Show the form for creating a new resource.

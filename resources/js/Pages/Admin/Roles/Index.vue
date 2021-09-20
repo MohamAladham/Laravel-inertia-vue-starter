@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <div v-if="items.data.length" class="card_results_container">
+        <div v-if="items.data?.length && !isLoadingTable" class="card_results_container">
             <div class="row card_results_head">
                 <div class="col">
                     اسم الدور
@@ -52,10 +52,15 @@
             </Card>
 
         </div>
+        <table-placeholder v-else-if="isLoadingTable"></table-placeholder>
 
 
-        <Paginate v-if="items.data.length && items.total > items.per_page" :items="items"/>
-        <div v-if="!items.data.length" class="alert alert-info">
+        <Paginate v-if="items.data?.length && items.total > items.per_page"
+                  :items="items"
+                  :isAjax="true" @fetchItems="fetchItems()"
+                  v-model:currentPaginationLink="currentPaginationLink"
+        />
+        <div v-if="!items.data?.length && !isLoadingTable" class="alert alert-info">
             لم يتم العثور على نتائج..
         </div>
 
@@ -70,20 +75,35 @@ import Card from "@/Components/Admin/Card";
 import Paginate from "@/Components/Admin/Paginate";
 import TableSearch from "@/Components/Admin/TableSearch";
 import PageHead from "@/Layouts/Admin/PageHead";
+import TablePlaceholder from "@/Components/Admin/TablePlaceholder";
 
 export default {
     layout: AdminLayout,
-    props: ["items", 'errors', 'title'],
-    components: {PageHead, TableSearch, Card, Breadcrumb, Paginate},
+    props: ['errors', 'title'],
+    components: {PageHead, TableSearch, Card, Breadcrumb, Paginate, TablePlaceholder},
     data() {
         return {
             breadcrumbLinks: [
                 {url: route('admin.admins.index'), title: 'المديرون'},
             ],
-
+            items: [],
+            currentPaginationLink: route('admin.roles.fetch_items'),
+            isLoadingTable: true,
         };
     },
     methods: {
+        fetchItems() {
+            let this_ = this;
+            this.isLoadingTable = true;
+            axios.get(this.currentPaginationLink).then((res) => {
+                this_.isLoadingTable = false;
+                if (res.status === 200) {
+                    this_.items = res.data.items
+                } else {
+                    generalOnُError();
+                }
+            })
+        },
         openDeleteModal(itemId) {
             let this_ = this;
             confirm('', function () {
@@ -94,6 +114,9 @@ export default {
             });
         },
     },
+    mounted() {
+        this.fetchItems();
+    }
 };
 </script>
 
