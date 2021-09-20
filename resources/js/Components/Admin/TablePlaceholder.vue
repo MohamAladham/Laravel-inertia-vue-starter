@@ -48,7 +48,7 @@
     background: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
     background-size: 800px 104px;
-    height: 15px;
+    height: 12px;
     position: relative;
 }
 </style>
