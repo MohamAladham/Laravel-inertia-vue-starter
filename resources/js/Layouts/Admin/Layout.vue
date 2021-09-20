@@ -18,14 +18,16 @@
                 <li class="nav-item dropdown dropdown-user">
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name font-weight-bolder">John Doe</span><span class="user-status">Admin</span>
+                            <span class="user-name font-weight-bolder">{{ this.$page.props.auth.user.name }}</span><span class="user-status">مدير</span>
                         </div>
-                        <span class="avatar"><img class="round" src="/assets/admin/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+                        <span class="avatar"><img class="round" :src="this.$page.props.auth.user.photo" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="user"></i> Profile</a><a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="mail"></i> Inbox</a><a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="check-square"></i> Task</a><a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="message-square"></i> Chats</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="user"></i> الملف الشخصي</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="settings"></i> Settings</a><a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="credit-card"></i> Pricing</a><a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="help-circle"></i> FAQ</a><a class="dropdown-item" href="javascript:void(0);"><i class="mr-50" data-feather="power"></i> Logout</a>
+                        <inertia-link class="dropdown-item" :href="route('logout')" method="post" as="a">
+                            <i class="mr-50" data-feather="power"></i> تسجيل الخروج
+                        </inertia-link>
                     </div>
                 </li>
             </ul>
@@ -56,7 +58,7 @@
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-light mt-5">
         <p class="clearfix mb-0">
-            <span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020<a class="ml-25" href="https://1.envato.market/pixinvent_portfolio" target="_blank">Pixinvent</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-right d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span>
+            <span class="float-md-right d-block d-md-inline-block mt-25">جميع الحقوق محفوظة &copy; {{(new Date()).getFullYear()}} </span>
         </p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
