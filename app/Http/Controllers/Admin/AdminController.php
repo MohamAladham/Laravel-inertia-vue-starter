@@ -44,7 +44,7 @@ class AdminController extends Controller
     {
         $data['items'] = Admin::with( 'roles' )
             ->search()
-            ->paginate( 1 );
+            ->paginate( 20 );
 
         return response()->json( [ 'items' => $data['items'] ] );
     }

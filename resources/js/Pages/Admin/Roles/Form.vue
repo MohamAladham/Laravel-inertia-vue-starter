@@ -117,7 +117,9 @@ export default {
                     }
                 },
                 onError: errors => {
-                    generalOnُError();
+                    if (!this_.form.errors) {
+                        generalOnُError(errors);
+                    }
                 },
             })
         },

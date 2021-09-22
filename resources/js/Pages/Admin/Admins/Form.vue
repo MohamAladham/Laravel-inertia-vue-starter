@@ -51,7 +51,7 @@
                                         <div class="row">
                                             <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المدير"/>
                                             <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"/>
-                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="errors.photo" label="الصورة الشخصية"/>
+                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="form.errors.photo" label="الصورة الشخصية"/>
                                         </div>
                                     </div>
                                     <!--/ general tab -->
@@ -65,7 +65,7 @@
 
                                     <!-- roles  -->
                                     <div class="tab-pane fade" id="account-vertical-roles" role="tabpanel" aria-labelledby="account-pill-roles" aria-expanded="false">
-                                        <select2-input v-model:value="form.roles" :error="errors.roles" label="الأدوار" multiple>
+                                        <select2-input v-model:value="form.roles" :error="form.errors.roles" label="الأدوار" multiple>
                                             <option v-for="role in roles" :key="role.id" :selected="form.roles.includes(role.id)" :value="role.id">{{ role.name }}</option>
                                         </select2-input>
                                     </div>
@@ -93,7 +93,7 @@
         <!-- / account setting page -->
 
     </div>
-    {{ this.$page.props.auth.user }}
+
 </template>
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
@@ -151,11 +151,11 @@ export default {
                             this_.$inertia.visit(route('admin.admins.index'));
                         });
                     } else {
-                        generalOnُError(this_.error);
+                        generalOnُError(this_.$page.props.error);
                     }
                 },
                 onError: errors => {
-                    generalOnُError();
+                    generalOnُError(errors);
                 },
             })
         },
