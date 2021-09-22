@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -62,6 +63,6 @@ class SettingController extends Controller
 
         Cache::forget( 'settings' );
 
-        return redirect( route( 'admin.settings.general' ) )->with( 'success', 'تمت حفظ الإعدادات بنجاح!' );
+        return Redirect::back();
     }
 }

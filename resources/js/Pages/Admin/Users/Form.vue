@@ -43,23 +43,23 @@
                                             <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المستخدم"/>
                                             <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"/>
 
-                                            <select-input v-model:value="form.country_id" @change="onCountryChange()" :error="errors.country_id" label="الدولة">
+                                            <select-input v-model:value="form.country_id" @change="onCountryChange()" :error="form.errors.country_id" label="الدولة">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="country in countries" :key="country.id" :selected="country.id===form.country_id" :value="country.id">{{ country.name }}</option>
                                             </select-input>
 
 
-                                            <select-input v-model:value="form.region_id" id="region_id" @change="onRegionChange()" :error="errors.region_id" label="المنطقة">
+                                            <select-input v-model:value="form.region_id" id="region_id" @change="onRegionChange()" :error="form.errors.region_id" label="المنطقة">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="region in regions" :key="region.id" :selected="region.id===form.region_id" :value="region.id">{{ region.name }}</option>
                                             </select-input>
 
-                                            <select-input v-model:value="form.city_id" id="city_id" :error="errors.city_id" label="المدينة">
+                                            <select-input v-model:value="form.city_id" id="city_id" :error="form.errors.city_id" label="المدينة">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="city in cities" :key="city.id" :selected="city.id===form.city_id" :value="city.id">{{ city.name }}</option>
                                             </select-input>
 
-                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="errors.photo" label="الصورة الشخصية"/>
+                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="form.errors.photo" label="الصورة الشخصية"/>
 
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@
                                 <div class="text-center mt-2">
                                     <submit-button
                                         v-if="this.$page.props.auth.user.permissions.includes('user_update')"
-                                        class="btn btn-primary" :is-loading="submitIsLoading">
+                                        class="btn btn-primary" :is-loading="form.processing">
                                         حفظ البيانات
                                     </submit-button>
                                 </div>
@@ -113,11 +113,9 @@ export default {
         title: '',
         item: {},
         countries: [],
-        errors: {}
     },
     data() {
         return {
-            submitIsLoading: false,
             breadcrumbLinks: [
                 {url: route('admin.users.index'), title: 'المستخدمون'},
             ],
@@ -142,6 +140,7 @@ export default {
     },
     methods: {
         submit() {
+            let this_ = this;
             let url_ = '';
 
             if (this.item) {
@@ -151,32 +150,34 @@ export default {
             }
 
             this.form.post(url_, {
-                onStart: visit => {
-                    this.submitIsLoading = true;
-                },
+                preserveScroll: true,
                 onSuccess(page) {
-                    generalOnSuccess();
+                    if (!this_.$page.props.error) {
+                        generalOnSuccess('', '', function () {
+                            this_.$inertia.visit(route('admin.users.index'));
+                        });
+                    } else {
+                        generalOnُError(this_.$page.props.error);
+                    }
                 },
                 onError: errors => {
-                    console.log(errors);
-                },
-                onFinish: visit => {
-                    this.submitIsLoading = false;
+                        generalOnُError(errors);
                 },
             })
         },
 
 
         onCountryChange() {
-            let countryId = this.form.country_id;
+            let countryId = parseInt(this.form.country_id);
             let url = route('admin.countries.regions.get_regions_json', countryId)
             axios.get(url).then((res) => {
                 this.regions = res.data
+                this.cities = [];
             })
         },
 
         onRegionChange() {
-            let regionId = this.form.region_id;
+            let regionId = parseInt(this.form.region_id);
             let url = route('admin.countries.regions_cities.get_cities_json', regionId)
             axios.get(url).then((res) => {
                 this.cities = res.data

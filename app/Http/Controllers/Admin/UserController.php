@@ -33,12 +33,25 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['items'] = User::search()
-            ->paginate( 20 );
         $data['title'] = 'المستخدمون';
 
         return Inertia::render( $this->viewPrefix . 'Index', $data );
     }
+
+
+
+    /*
+     *
+     */
+    public function fetchItems()
+    {
+        $data['items'] = User::search()
+            ->paginate( 20 );
+
+        return response()->json( [ 'items' => $data['items'] ] );
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -71,8 +84,9 @@ class UserController extends Controller
         $user->country()->associate( $arr['country_id'] );
         $user->region()->associate( $arr['region_id'] );
         $user->city()->associate( $arr['city_id'] );
+        $user->save();
 
-        return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الإضافة بنجاح!' );
+        return Redirect::back();
     }
 
     /**
@@ -121,7 +135,7 @@ class UserController extends Controller
         $user->city()->associate( $arr['city_id'] );
         $user->update( $arr );
 
-        return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تم التعديل بنجاح' );
+        return Redirect::back();
     }
 
     /**
@@ -134,7 +148,7 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الحذف!' );
+        return Redirect::back();
     }
 
     /*

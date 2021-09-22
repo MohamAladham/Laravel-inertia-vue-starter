@@ -18,4 +18,19 @@ class Role extends Model
     {
         return $this->belongsToMany( Permission::class, 'role_permission', 'role_id', 'permission_id' );
     }
+
+
+    /*
+     *
+     */
+    public function scopeSearch( $query )
+    {
+        if ( $q = request()->get( 'search' ) )
+        {
+            $query->where( function ( $sub ) use ( $q ) {
+                $sub->where( 'name', 'like', "%{$q}%" );
+            } );
+        }
+    }
+
 }

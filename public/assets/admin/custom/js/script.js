@@ -25,6 +25,10 @@ function generalOnُError(text = '', heading = '') {
     heading = heading ? heading : 'خطأ';
     text = text ? text : 'لم يتم حفظ البيانات بنجاح';
 
+    if (typeof text === 'object') {
+        text = Object.values(text).join('<br>');
+    }
+
     Swal.fire({
         title: heading,
         html: text,
@@ -69,3 +73,24 @@ $(document).ready(function () {
 document.addEventListener('inertia:finish', (event) => {
     initSelect2();
 })
+
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+
+function prepareFilterParameters(filter) {
+    let filterKeys = Object.keys(filter);
+
+    filterKeys.forEach(function (key) {
+        filter[key] = getParameterByName(key) ? getParameterByName(key) : filter[key];
+    });
+
+    return filter;
+}

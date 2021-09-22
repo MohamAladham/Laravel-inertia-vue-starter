@@ -66,11 +66,23 @@
 
 <script>
 export default {
-    props: ["items", "isAjax"],
+    props: {
+        isAjax: {
+            type: Boolean,
+            default() {
+                return true;
+            },
+        },
+        items: [],
+        filter: null, //if isAjax
+
+    },
     methods: {
         linkClick(paginationLink) {
+            let paginationPage = getParameterByName('page', paginationLink);
             if (this.isAjax) {
-                this.$emit('update:currentPaginationLink', this.prepareLink(paginationLink));
+                this.filter.page = paginationPage;
+                this.$emit('update:filter', this.filter);
                 this.$emit('fetchItems');
             }
         },

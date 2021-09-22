@@ -49,7 +49,6 @@ export default {
     props: {
         title: '',
         settings: {},
-        errors: {}
     },
     data() {
         return {
@@ -78,13 +77,21 @@ export default {
     },
     methods: {
         submit() {
+            let this_ = this;
             let url_ = route('admin.settings.update_general');
             this.form.post(url_, {
+                preserveScroll: true,
                 onSuccess(page) {
-                    generalOnSuccess();
+                    if (!this_.$page.props.error) {
+                        generalOnSuccess('', '', function () {
+                            this_.$inertia.visit(route('admin.settings.general'));
+                        });
+                    } else {
+                        generalOnُError(this_.error);
+                    }
                 },
                 onError: errors => {
-                    console.log(errors);
+                    generalOnُError();
                 },
             })
         },

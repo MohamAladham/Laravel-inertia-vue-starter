@@ -77,7 +77,7 @@
                                 <div class="text-center mt-2">
                                     <submit-button
                                         v-if="this.$page.props.auth.user.permissions.includes('admin_update')"
-                                        class="btn btn-primary" :is-loading="submitIsLoading">
+                                        class="btn btn-primary" :is-loading="form.processing">
                                         حفظ البيانات
                                     </submit-button>
                                 </div>
@@ -93,7 +93,7 @@
         <!-- / account setting page -->
 
     </div>
-
+    {{ this.$page.props.auth.user }}
 </template>
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
@@ -111,13 +111,11 @@ export default {
     props: {
         title: '',
         item: {},
-        errors: {},
         roles: [],
         admin_roles: [],
     },
     data() {
         return {
-            submitIsLoading: false,
             breadcrumbLinks: [
                 {url: route('admin.admins.index'), title: 'المديرون'},
             ],
@@ -137,6 +135,7 @@ export default {
     methods: {
         submit() {
             let url_ = '';
+            let this_ = this;
 
             if (this.item) {
                 url_ = route('admin.admins.update', this.item);
@@ -145,17 +144,18 @@ export default {
             }
 
             this.form.post(url_, {
-                onStart: visit => {
-                    this.submitIsLoading = true;
-                },
+                preserveScroll: true,
                 onSuccess(page) {
-                    generalOnSuccess();
+                    if (!this_.$page.props.error) {
+                        generalOnSuccess('', '', function () {
+                            this_.$inertia.visit(route('admin.admins.index'));
+                        });
+                    } else {
+                        generalOnُError(this_.error);
+                    }
                 },
                 onError: errors => {
-                    console.log(errors);
-                },
-                onFinish: visit => {
-                    this.submitIsLoading = false;
+                    generalOnُError();
                 },
             })
         },

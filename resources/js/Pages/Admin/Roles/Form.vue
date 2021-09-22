@@ -77,7 +77,6 @@ export default {
         title: '',
         item: {},
         role_permissions: [],
-        errors: {},
         permissions: []
     },
     data() {
@@ -109,7 +108,7 @@ export default {
             this.form.post(url_, {
                 preserveScroll: true,
                 onSuccess(page) {
-                    if (!this_.error) {
+                    if (!this_.$page.props.error) {
                         generalOnSuccess('', '', function () {
                             this_.$inertia.visit(route('admin.roles.index'));
                         });

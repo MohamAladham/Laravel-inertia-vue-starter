@@ -41,7 +41,7 @@ class RoleController extends Controller
      */
     public function fetchItems()
     {
-        $data['items'] = Role::latest()->paginate( 100 );
+        $data['items'] = Role::search()->latest()->paginate( 100 );
 
         return response()->json( [ 'items' => $data['items'] ] );
     }

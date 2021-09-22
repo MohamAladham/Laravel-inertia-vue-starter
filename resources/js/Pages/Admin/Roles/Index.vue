@@ -7,7 +7,7 @@
 
         <div class="row mt-2 mb-2">
             <div class="col-sm-3">
-                <table-search :routeSearch="['admin.roles.index', {}]"/>
+                <table-search :routeSearch="['admin.roles.index', {}]" v-model:filter="filter" @fetchItems="fetchItems()"/>
             </div>
             <div class="col-sm-9 text-right">
                 <inertia-link :href="route('admin.roles.create')" class="btn btn-sm btn-primary">
@@ -57,8 +57,8 @@
 
         <Paginate v-if="items.data?.length && items.total > items.per_page"
                   :items="items"
-                  :isAjax="true" @fetchItems="fetchItems()"
-                  v-model:currentPaginationLink="currentPaginationLink"
+                  @fetchItems="fetchItems()"
+                  v-model:filter="filter"
         />
         <div v-if="!items.data?.length && !isLoadingTable" class="alert alert-info">
             لم يتم العثور على نتائج..
@@ -87,7 +87,7 @@ export default {
                 {url: route('admin.admins.index'), title: 'المديرون'},
             ],
             items: [],
-            currentPaginationLink: route('admin.roles.fetch_items'),
+            filter: prepareFilterParameters({page: 1, search: ''}),
             isLoadingTable: true,
         };
     },
@@ -95,7 +95,8 @@ export default {
         fetchItems() {
             let this_ = this;
             this.isLoadingTable = true;
-            axios.get(this.currentPaginationLink).then((res) => {
+            let currentPaginationLink = route('admin.roles.fetch_items', this.filter);
+            axios.get(currentPaginationLink).then((res) => {
                 this_.isLoadingTable = false;
                 if (res.status === 200) {
                     this_.items = res.data.items

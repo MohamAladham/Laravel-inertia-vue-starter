@@ -14,7 +14,7 @@ class AddCountryToUsersTable extends Migration
     public function up()
     {
         Schema::table( 'users', function ( Blueprint $table ) {
-            $table->foreignId( 'country_id' )->references( 'id' )->on( 'countries' );
+            $table->foreignId( 'country_id' )->nullable()->references( 'id' )->on( 'countries' );
             $table->foreignId( 'region_id' )->nullable()->references( 'id' )->on( 'country_regions' );
             $table->foreignId( 'city_id' )->nullable()->references( 'id' )->on( 'country_region_cities' );
         } );

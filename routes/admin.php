@@ -24,9 +24,11 @@ Route::middleware( 'auth:admin' )->name( 'admin.' )->prefix( 'admin' )->group( f
     Route::get( '/countries-regions/get-regions-json/{countryId}', [ RegionController::class, 'getRegionsJson' ] )->name( 'countries.regions.get_regions_json' );
     Route::get( '/countries-regions-cities/get-cities-json/{regionId}', [ RegionCityController::class, 'getCitiesJson' ] )->name( 'countries.regions_cities.get_cities_json' );
     Route::get( 'admins/export', [ AdminController::class, 'export' ] )->name( 'admins.export' );
+    Route::get( 'admins/fetch-items', [ AdminController::class, 'fetchItems' ] )->name( 'admins.fetch_items' );
     Route::resource( 'admins', AdminController::class );
     Route::get( 'roles/fetch-items', [ RoleController::class, 'fetchItems' ] )->name( 'roles.fetch_items' );
     Route::resource( 'roles', RoleController::class );
+    Route::get( 'users/fetch-items', [ UserController::class, 'fetchItems' ] )->name( 'users.fetch_items' );
     Route::get( 'users/export', [ UserController::class, 'export' ] )->name( 'users.export' );
     Route::resource( 'users', UserController::class );
 

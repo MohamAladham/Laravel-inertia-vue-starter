@@ -15,16 +15,33 @@
 <script>
 export default {
     name: 'table-search',
-    props: ['routeSearch'],
+    props: {
+        isAjax: {
+            type: Boolean,
+            default() {
+                return true;
+            },
+        },
+        routeSearch: Array,
+        filter: null, //if isAjax
+    },
     data() {
         return {
             search: ''
         };
-    }, methods: {
+    },
+    methods: {
         searching() {
-            this.$inertia.replace(
-                route(this.routeSearch[0], Object.assign({search: this.search}, this.routeSearch[1]))
-            );
+            if (this.isAjax) {
+                this.filter.search = this.search;
+                this.filter.page = 1;//reset to first page
+                this.$emit('update:filter', this.filter);
+                this.$emit('fetchItems');
+            } else {
+                this.$inertia.replace(
+                    route(this.routeSearch[0], Object.assign({search: this.search}, this.routeSearch[1]))
+                );
+            }
         },
     }
 

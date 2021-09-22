@@ -53,13 +53,8 @@
 
 <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
 
-@inertia
-
-@routes
 <!-- BEGIN: Vendor JS-->
 <script src="{{url('/')}}/assets/admin/vendors/js/vendors.min.js"></script>
-<!-- BEGIN Vendor JS-->
-<script src="{{ mix('js/app.js') }}"></script>
 
 <!-- BEGIN: Page Vendor JS-->
 <!-- END: Page Vendor JS-->
@@ -75,6 +70,10 @@
 <script src="{{url('/')}}/assets/admin/vendors/js/forms/select/select2.full.min.js"></script>
 
 <script src="{{url('/')}}/assets/admin/custom/js/script.js"></script>
+@inertia
+
+@routes
+<script src="{{ mix('js/app.js') }}"></script>
 
 <script>
     $(window).on('load', function () {

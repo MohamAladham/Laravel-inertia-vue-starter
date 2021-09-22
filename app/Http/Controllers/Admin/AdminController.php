@@ -19,7 +19,7 @@ class AdminController extends Controller
 
     public function __construct()
     {
-        $this->middleware( "check_permission:admin_show", [ 'only' => [ 'index', 'export' , 'edit'] ] );
+        $this->middleware( "check_permission:admin_show", [ 'only' => [ 'index', 'export', 'edit' ] ] );
         $this->middleware( "check_permission:admin_update", [ 'only' => [ 'create', 'store', 'update' ] ] );
         $this->middleware( "check_permission:admin_delete", [ 'only' => [ 'destroy' ] ] );
     }
@@ -31,13 +31,24 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $data['items'] = Admin::with( 'roles' )->search()
-            ->paginate( 20 );
-
         $data['title'] = 'المديرون';
 
         return Inertia::render( $this->viewPrefix . 'Index', $data );
     }
+
+
+    /*
+     *
+     */
+    public function fetchItems()
+    {
+        $data['items'] = Admin::with( 'roles' )
+            ->search()
+            ->paginate( 1 );
+
+        return response()->json( [ 'items' => $data['items'] ] );
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -68,7 +79,7 @@ class AdminController extends Controller
         $admin = Admin::create( $arr );
         $admin->roles()->sync( $request->roles );
 
-        return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الإضافة بنجاح!' );
+        return Redirect::back();
     }
 
     /**
@@ -116,7 +127,7 @@ class AdminController extends Controller
         $admin->roles()->sync( $request->roles );
         $admin->update( $arr );
 
-        return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تم التعديل بنجاح' );
+        return Redirect::back();
     }
 
     /**
