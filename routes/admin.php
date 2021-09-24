@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Countries\RegionCityController;
 use App\Http\Controllers\Admin\Countries\RegionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -37,8 +38,17 @@ Route::middleware( 'auth:admin' )->name( 'admin.' )->prefix( 'admin' )->group( f
     Route::post( '/settings/update-general', [ SettingController::class, 'updateGeneral' ] )->name( 'settings.update_general' );
     /***** /SETTINGS *****/
 
+    /***** MENUS *****/
     Route::resource( 'menus', MenuController::class );
     Route::post( '/menus/order', [ MenuController::class, 'order' ] )->name( 'menus.order' );
+    /***** /MENUS *****/
+
+    /***** NOTIFICATIONS *****/
+    Route::get( '/notifications', [ NotificationsController::class, 'index' ] )->name( 'notifications' );
+    Route::post( '/notifications/mark-all-as-read', [ NotificationsController::class, 'markAllAsRead' ] )->name( 'notifications.mark_all_as_read' );
+    Route::post( '/notifications/{id}/mark-as-read', [ NotificationsController::class, 'markAsRead' ] )->name( 'notifications.mark_as_read' );
+    /***** /NOTIFICATIONS *****/
+
 
 } );
 

@@ -15,6 +15,12 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav align-items-center ml-auto">
+                <li class="nav-item dropdown dropdown-notification mr-25">
+                    <inertia-link class="nav-link" :href="route('admin.notifications')" data-toggle="dropdown">
+                        <i class="ficon" data-feather="bell"></i>
+                        <span v-if="this.$page.props.auth.unreadNotificationsCount" class="badge badge-pill badge-danger badge-up">{{ this.$page.props.auth.unreadNotificationsCount }}</span>
+                    </inertia-link>
+                </li>
                 <li class="nav-item dropdown dropdown-user">
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
@@ -58,7 +64,7 @@
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-light mt-5">
         <p class="clearfix mb-0">
-            <span class="float-md-right d-block d-md-inline-block mt-25">جميع الحقوق محفوظة &copy; {{(new Date()).getFullYear()}} </span>
+            <span class="float-md-right d-block d-md-inline-block mt-25">جميع الحقوق محفوظة &copy; {{ (new Date()).getFullYear() }} </span>
         </p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>

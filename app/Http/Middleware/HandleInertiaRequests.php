@@ -73,7 +73,8 @@ class HandleInertiaRequests extends Middleware
 
         return array_merge( parent::share( $request ), [
             'auth'           => [
-                'user' => $user,
+                'user'                     => $user,
+                'unreadNotificationsCount' => $user ? $user->unreadNotifications->count() : 0,
             ],
             'appName'        => get_setting( 'site_title', 'اسم النظام' ),
             'adminPanelLogo' => get_setting( 'admin_panel_logo', asset( 'assets/admin/custom/img/logo_placeholder.png' ) ),
