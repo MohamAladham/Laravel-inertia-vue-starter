@@ -5,9 +5,10 @@
 - run `composer install` to install vendor packages
 - make storage and bootstrap folder writable `chmod -R 777 storage bootstrap`
 - run `php artisan storage:link` to make them accessible from the web
-- rename `.env.example ` to `.env ` and set necessary configs
+- copy `.env.example ` to `.env ` and set necessary configs
 - run `php artisan key:generate` to generate new application key
-- run `php artisan migrate` to run database migrations
+- run `php artisan migrate --seed` to run database migrations
+- run `npm install`
 - for test proposal run `php artisan serve`
 
 **Notes:**
