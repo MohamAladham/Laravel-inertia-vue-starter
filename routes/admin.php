@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Countries\RegionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\NotificationsController;
+use App\Http\Controllers\Admin\NotificationTemplateController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -32,6 +33,8 @@ Route::middleware( 'auth:admin' )->name( 'admin.' )->prefix( 'admin' )->group( f
     Route::get( 'users/fetch-items', [ UserController::class, 'fetchItems' ] )->name( 'users.fetch_items' );
     Route::get( 'users/export', [ UserController::class, 'export' ] )->name( 'users.export' );
     Route::resource( 'users', UserController::class );
+    Route::get( 'notification_template/fetch-items', [ NotificationTemplateController::class, 'fetchItems' ] )->name( 'notification_templates.fetch_items' );
+    Route::resource( 'notification_templates', NotificationTemplateController::class )->only( [ 'index', 'edit', 'update' ] );
 
     /***** SETTINGS *****/
     Route::get( '/settings/general', [ SettingController::class, 'general' ] )->name( 'settings.general' );

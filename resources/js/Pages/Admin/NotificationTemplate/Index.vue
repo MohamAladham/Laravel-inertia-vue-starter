@@ -7,29 +7,14 @@
 
         <div class="row mt-2 mb-2">
             <div class="col-sm-3">
-                <table-search :routeSearch="['admin.users.fetch_items', {}]" v-model:filter="filter" @fetchItems="fetchItems()"/>
-            </div>
-            <div class="col-sm-9 text-right">
-                <inertia-link
-                    v-if="this.$page.props.auth.user.permissions.includes('user_update')"
-                    :href="route('admin.users.create')" class="btn btn-sm btn-primary">
-                    <i class="fas fa-plus"></i>
-                    إضافة جديد
-                </inertia-link>
-                <a :href="route('admin.users.export')" class="btn btn-sm btn-info">
-                    <i class="fas fa-file-excel"></i>
-                    تصدير البيانات
-                </a>
+                <table-search :routeSearch="['admin.notification_templates.index', {}]" v-model:filter="filter" @fetchItems="fetchItems()"/>
             </div>
         </div>
 
         <div v-if="items.data?.length && !isLoadingTable" class="card_results_container">
             <div class="row card_results_head">
                 <div class="col">
-                    اسم المستخدم
-                </div>
-                <div class="col">
-                    البريد الإلكتروني
+                    اسم القالب
                 </div>
                 <div class="col col-2 text-center">
                     الخيارات
@@ -40,25 +25,15 @@
                 <template #body>
                     <div class="row">
                         <div class="col">
-                            <inertia-link :href="route('admin.users.edit', item.id)">
-                                <img :src="item.photo" class="rounded-circle" style="width:40px; height: 40px; margin-left: 3px"/>
+                            <a @click.stop.prevent="getItem(item.id)">
                                 {{ item.name }}
-                            </inertia-link>
-                        </div>
-                        <div class="col">
-                            {{ item.email }}
+                            </a>
                         </div>
                         <div class="col col-2 text-center">
-                            <inertia-link
-                                :href="route('admin.users.edit', item.id)"
-                                class="btn btn-sm btn-info">
-                                تعديل
-                            </inertia-link>
                             <a
-                                v-if="this.$page.props.auth.user.permissions.includes('user_delete')"
-                                @click="openDeleteModal(item.id)"
-                                class="btn btn-sm btn-danger">
-                                حذف
+                                @click.stop.prevent="getItem(item.id)"
+                                class="btn btn-sm btn-info"
+                            >تعديل
                             </a>
                         </div>
                     </div>
@@ -80,10 +55,13 @@
 
     </div>
 
+    <edit :form="editItemForm" :errors="errors"/>
+
 </template>
 
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
+import Edit from "@/Pages/Admin/NotificationTemplate/Edit";
 import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
 import Card from "@/Components/Admin/Card";
 import Paginate from "@/Components/Admin/Paginate";
@@ -93,21 +71,28 @@ import TablePlaceholder from "@/Components/Admin/TablePlaceholder";
 
 export default {
     layout: AdminLayout,
-    props: ["items", 'title'],
-    components: {PageHead, TableSearch, Card, Breadcrumb, Paginate, TablePlaceholder},
+    props: ['title'],
+    components: {PageHead, TableSearch, Card, Breadcrumb, Paginate, Edit, TablePlaceholder},
     data() {
         return {
             breadcrumbLinks: [],
+            editItemForm: this.$inertia.form({
+                email_subject: '',
+                email_text: '',
+                sms_text: '',
+                notification_text: '',
+                id: '',
+            }),
             items: [],
-            isLoadingTable: true,
             filter: prepareFilterParameters({page: 1, search: ''}),
+            isLoadingTable: true,
         };
     },
     methods: {
         fetchItems() {
             let this_ = this;
             this.isLoadingTable = true;
-            let currentPaginationLink = route('admin.users.fetch_items', this.filter);
+            let currentPaginationLink = route('admin.notification_templates.fetch_items', this.filter);
             axios.get(currentPaginationLink).then((res) => {
                 this_.isLoadingTable = false;
                 if (res.status === 200) {
@@ -119,15 +104,14 @@ export default {
                 generalOnُError(serverErrorMsg);
             })
         },
-        openDeleteModal(itemId) {
-            let this_ = this;
-            confirm('', function () {
-                this_.$inertia.delete(route("admin.users.destroy", itemId), {
-                    onSuccess: page => {
-                    }
-                });
-            });
+        getItem(id, event) {
+            let url = route('admin.notification_templates.edit', id)
+            axios.get(url).then((res) => {
+                this.editItemForm = {...this.editItemForm, ...res.data}
+                $('#editModal').modal('show');
+            })
         },
+
     },
     mounted() {
         this.fetchItems();

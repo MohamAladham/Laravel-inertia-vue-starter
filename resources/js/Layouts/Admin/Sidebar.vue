@@ -111,14 +111,20 @@ export default {
                     title: 'الإعدادات',
                     icon: 'settings',
                     url: null,
-                    activeCheck: ['admin.settings.*', 'admin.countries.*'],
-                    permissions: ['setting_manage', 'menu_manage', 'country_manage'],
+                    activeCheck: ['admin.settings.*', 'admin.countries.*', 'menus.*', 'notification_templates.*'],
+                    permissions: ['setting_manage', 'menu_manage', 'country_manage', 'notification_template_manage'],
                     subLinks: [
                         {
                             title: 'الإعدادات العامة',
                             url: route('admin.settings.general'),
                             activeCheck: ['admin.settings.general'],
                             permissions: ['setting_manage'],
+                        },
+                        {
+                            title: 'قوالب الإشعارات',
+                            url: route('admin.notification_templates.index'),
+                            activeCheck: ['admin.notification_templates.*'],
+                            permissions: ['notification_template_manage'],
                         },
                         {
                             title: 'إعدادات القوائم',

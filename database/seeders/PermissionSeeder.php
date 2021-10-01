@@ -18,16 +18,17 @@ class PermissionSeeder extends Seeder
 
         foreach (
             [
-                'admin'   => [ 'المديرون', 'fas fa-users' ],
-                'user'    => [ 'المستخدمون', 'fas fa-users' ],
-                'menu'    => [ 'القوائم', 'fas fa-bars' ],
-                'setting' => [ 'الإعدادات', 'fas fa-cog' ],
-                'country' => [ 'الدول والمدن', 'fas fa-globe-americas' ],
-                'role'    => [ 'الأدوار والصلاحيات', 'fas fa-user-lock' ],
+                'admin'                 => [ 'المديرون', 'fas fa-users' ],
+                'user'                  => [ 'المستخدمون', 'fas fa-users' ],
+                'menu'                  => [ 'القوائم', 'fas fa-bars' ],
+                'setting'               => [ 'الإعدادات', 'fas fa-cog' ],
+                'notification_template' => [ 'قوالب الإشعارات', 'fas fa-envelope' ],
+                'country'               => [ 'الدول والمدن', 'fas fa-globe-americas' ],
+                'role'                  => [ 'الأدوار والصلاحيات', 'fas fa-user-lock' ],
             ] as $k => $v )
         {
 
-            if ( in_array( $k, [ 'menu', 'setting', 'country', 'role' ] ) )
+            if ( in_array( $k, [ 'menu', 'setting', 'country', 'role', 'notification_template' ] ) )
             {
                 $permissions[] = [
                     'name'     => "{$k}_manage",

@@ -1,3 +1,5 @@
+const serverErrorMsg = 'حدث خطأٌ من طرف الخادم، يرجى إعادة المحاولة.';
+
 function generalOnSuccess(text = '', heading = '', callback = undefined, autoDismiss = true) {
     heading = heading ? heading : 'تمت حفظ البيانات بنجاح!';
     text = text ? text : 'سيتم تحويلك تلقائياً..';

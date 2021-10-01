@@ -103,6 +103,8 @@ export default {
                 } else {
                     generalOnُError();
                 }
+            }).catch(function (error) {
+                generalOnُError(serverErrorMsg);
             })
         },
         openDeleteModal(itemId) {
