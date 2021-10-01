@@ -28,6 +28,7 @@ class CreateAdminRoleTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists( 'admin_role' );
     }
 }

@@ -25,8 +25,7 @@ class AddIconToPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::table( 'permissions', function ( Blueprint $table ) {
-            //
-        } );
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists( 'permissions' );
     }
 }
