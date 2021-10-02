@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
+use App\Models\Role\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,10 +16,13 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $user           = new Admin();
-        $user->password = 'admin';
-        $user->email    = 'm1aladham@gmail.com';
-        $user->name     = 'مدير النظام';
-        $user->save();
+        $email = 'm1aladham@gmail.com';
+
+        $user = Admin::firstOrCreate(
+            [ 'email' => $email ],
+            [ 'password' => 'admin', 'email' => $email, 'name' => 'مدير النظام', ]
+        );
+
+        $user->roles()->attach( Role::first() );
     }
 }

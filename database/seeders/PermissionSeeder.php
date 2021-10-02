@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Role\Permission;
+use App\Models\Role\Role;
 use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
@@ -48,6 +49,23 @@ class PermissionSeeder extends Seeder
             }
         }
 
-        Permission::insert( $permissions );
+
+        foreach ( $permissions as $perm )
+        {
+            Permission::firstOrCreate(
+                [ 'name' => $perm['name'] ],
+                $perm
+            );
+        }
+
+        // insert default role
+        if ( !Role::first() )
+        {
+            $permissions = Permission::get()->map( function ( $perm ) {
+                return $perm->id;
+            } );
+            $role        = Role::create( [ 'name' => 'صلاحية مُطلقة' ] );
+            $role->permissions()->attach( $permissions );
+        }
     }
 }

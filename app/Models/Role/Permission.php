@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-    public $timestamps = TRUE;
+    public $timestamps = FALSE;
     protected $fillable = [ 'title' ];
     protected $appends = [ 'label' ];
 
