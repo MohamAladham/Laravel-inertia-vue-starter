@@ -23,6 +23,6 @@ class AdminSeeder extends Seeder
             [ 'password' => 'admin', 'email' => $email, 'name' => 'مدير النظام', ]
         );
 
-        $user->roles()->attach( Role::first() );
+        $user->roles()->sync( Role::first() );
     }
 }
