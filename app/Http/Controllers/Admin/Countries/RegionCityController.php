@@ -30,11 +30,22 @@ class RegionCityController extends Controller
     {
         $data['country'] = $country;
         $data['region']  = $region;
-        $data['items']   = $region->cities()->search()->paginate( 100 );
         $data['title']   = 'المدن';
 
         return Inertia::render( 'Admin/Countries/Cities/Index', $data );
     }
+
+
+    /*
+     *
+     */
+    public function fetchItems( CountryRegion $region )
+    {
+        $data['items'] = $region->cities()->search()->paginate( 100 );
+
+        return response()->json( [ 'items' => $data['items'] ] );
+    }
+
 
     /**
      * Show the form for creating a new resource.

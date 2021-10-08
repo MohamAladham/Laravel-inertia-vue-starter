@@ -28,13 +28,23 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $data['items'] = Country::search()->withCount( 'regions' )
-            ->paginate( 100 );
-
         $data['title'] = 'الدول';
 
         return Inertia::render( 'Admin/Countries/Index', $data );
     }
+
+
+    /*
+     *
+     */
+    public function fetchItems()
+    {
+        $data['items'] = Country::search()->withCount( 'regions' )
+            ->paginate( 100 );
+
+        return response()->json( [ 'items' => $data['items'] ] );
+    }
+
 
     /**
      * Show the form for creating a new resource.

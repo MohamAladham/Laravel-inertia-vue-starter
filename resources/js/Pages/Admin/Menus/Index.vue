@@ -100,7 +100,6 @@
     <!--    modal-->
     <edit :form="editItemForm" :errors="errors"/>
     <create :parent_id="parent_id"/>
-    <confirm-modal @confirm="deleteItem"/>
 
 
 </template>
@@ -110,7 +109,6 @@
 import AdminLayout from "@/Layouts/Admin/Layout";
 import Edit from "@/Pages/Admin/Menus/Edit";
 import Create from "@/Pages/Admin/Menus/Create";
-import ConfirmModal from "@/Components/Admin/ConfirmModal";
 import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
 import Card from "@/Components/Admin/Card";
 import Paginate from "@/Components/Admin/Paginate";
@@ -120,7 +118,7 @@ import PageHead from "@/Layouts/Admin/PageHead";
 export default {
     layout: AdminLayout,
     props: ["items", 'errors', 'title'],
-    components: {PageHead, Card, Breadcrumb, ConfirmModal, Create, Edit, Paginate, draggable},
+    components: {PageHead, Card, Breadcrumb,  Create, Edit, Paginate, draggable},
     data() {
         return {
             editItemForm: this.$inertia.form({
@@ -143,15 +141,14 @@ export default {
         },
 
         openDeleteModal(itemId) {
-            $('#confirmModal').modal('show');
-            this.deleteItemId = itemId;
-        },
-        deleteItem() {
-            this.$inertia.delete(route("admin.menus.destroy", this.deleteItemId), {
-                onSuccess: page => {
-                    generalOnSuccess('تم حذف السجل بنجاح!');
-                    $('#confirmModal').modal('hide');
-                }
+            let this_ = this;
+            confirm('', function () {
+                this_.$inertia.delete(route("admin.menus.destroy", itemId), {
+                    preserveScroll: true,
+                    onSuccess: page => {
+                        this_.fetchItems();
+                    }
+                });
             });
         },
 
@@ -165,6 +162,7 @@ export default {
         endSorting() {
             let url = route('admin.menus.order');
             this.$inertia.post(url, {items: this.items}, {
+                preserveScroll: true,
                 onSuccess() {
                     generalOnSuccess('تم حفظ الترتيب بنجاح.');
                 }

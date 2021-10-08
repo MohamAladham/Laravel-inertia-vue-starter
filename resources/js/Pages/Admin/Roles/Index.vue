@@ -93,6 +93,7 @@ export default {
     },
     methods: {
         fetchItems() {
+            console.log(this.filter);
             let this_ = this;
             this.isLoadingTable = true;
             let currentPaginationLink = route('admin.roles.fetch_items', this.filter);
@@ -112,6 +113,7 @@ export default {
             confirm('', function () {
                 this_.$inertia.delete(route("admin.roles.destroy", itemId), {
                     onSuccess: page => {
+                        this_.fetchItems();
                     }
                 });
             });

@@ -48,12 +48,14 @@ export default {
     },
     methods: {
         submit() {
+            let this_ = this;
             let url_ = route('admin.countries.regions.cities.store', [this.country, this.region]);
             this.form.post(url_, {
                 onStart: visit => {
                     this.submitIsLoading = true;
                 },
                 onSuccess(page) {
+                    this_.$emit('saved');
                     $('#createModal').modal('hide');
                 },
                 onFinish: visit => {

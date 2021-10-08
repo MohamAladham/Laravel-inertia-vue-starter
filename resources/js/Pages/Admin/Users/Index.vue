@@ -124,6 +124,7 @@ export default {
             confirm('', function () {
                 this_.$inertia.delete(route("admin.users.destroy", itemId), {
                     onSuccess: page => {
+                        this_.fetchItems();
                     }
                 });
             });

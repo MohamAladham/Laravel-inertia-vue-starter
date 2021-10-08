@@ -116,7 +116,7 @@ class RoleController extends Controller
     {
         $role->delete();
 
-        return Redirect::route( $this->routePrefix . 'index' )->with( 'success', 'تمت الحذف!' );
+        return back();
     }
 
 }

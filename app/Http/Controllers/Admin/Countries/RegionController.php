@@ -27,11 +27,22 @@ class RegionController extends Controller
     public function index( Country $country )
     {
         $data['country'] = $country;
-        $data['items']   = $country->regions()->search()->withCount( 'cities' )->paginate( 100 );
         $data['title']   = 'المناطق';
 
         return Inertia::render( 'Admin/Countries/Regions/Index', $data );
     }
+
+
+    /*
+     *
+     */
+    public function fetchItems(Country $country)
+    {
+        $data['items']   = $country->regions()->search()->withCount( 'cities' )->paginate( 100 );
+
+        return response()->json( [ 'items' => $data['items'] ] );
+    }
+
 
     /**
      * Show the form for creating a new resource.

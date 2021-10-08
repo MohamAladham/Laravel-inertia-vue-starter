@@ -47,12 +47,14 @@ export default {
     },
     methods: {
         submit() {
+            let this_ = this;
             let url_ = route('admin.countries.regions.store', this.country);
             this.form.post(url_, {
                 onStart: visit => {
                     this.submitIsLoading = true;
                 },
                 onSuccess(page) {
+                    this_.$emit('saved');
                     $('#createModal').modal('hide');
                 },
                 onFinish: visit => {

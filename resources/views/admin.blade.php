@@ -59,10 +59,6 @@
 <!-- BEGIN: Page Vendor JS-->
 <!-- END: Page Vendor JS-->
 
-<!-- BEGIN: Theme JS-->
-<script src="{{url('/')}}/assets/admin/js/core/app-menu.js"></script>
-<script src="{{url('/')}}/assets/admin/js/core/app.js"></script>
-<!-- END: Theme JS-->
 
 <!-- Sweet Alerts js -->
 <script src="{{url('/')}}/assets/admin/vendors/js/sweetalert2/sweetalert2.min.js"></script>
@@ -74,6 +70,12 @@
 
 @routes
 <script src="{{ mix('js/app.js') }}"></script>
+
+
+<!-- BEGIN: Theme JS-->
+<script src="{{url('/')}}/assets/admin/js/core/app-menu.js"></script>
+<script src="{{url('/')}}/assets/admin/js/core/app.js"></script>
+<!-- END: Theme JS-->
 
 <script>
     $(window).on('load', function () {
