@@ -18,7 +18,7 @@
                 <li class="nav-item dropdown dropdown-notification mr-25">
                     <inertia-link class="nav-link" :href="route('admin.notifications')" data-toggle="dropdown">
                         <i class="ficon" data-feather="bell"></i>
-                        <span v-if="this.$page.props.auth.unreadNotificationsCount" class="badge badge-pill badge-danger badge-up">{{ this.$page.props.auth.unreadNotificationsCount }}</span>
+                        <span v-show="this.$page.props.auth.unreadNotificationsCount" id="notificationsBadge" class="badge badge-pill badge-danger badge-up">{{ this.$page.props.auth.unreadNotificationsCount }}</span>
                     </inertia-link>
                 </li>
                 <li class="nav-item dropdown dropdown-user">

@@ -19,6 +19,9 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .webpackConfig(require('./webpack.config'));
 
+
+mix.js('resources/js/laravel-echo-setup.js', 'public/js');
+
 if (mix.inProduction()) {
     mix.version();
 }

@@ -4,7 +4,9 @@ namespace App\Notifications;
 
 use App\Models\NotificationTemplate;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -39,7 +41,8 @@ class NewUserNotification extends Notification implements ShouldQueue
      */
     public function via( $notifiable )
     {
-        return [ 'mail', 'database' ];
+//        return [ 'mail', 'database', 'broadcast' ];
+        return [  'database', 'broadcast' ];
     }
 
     /**
@@ -70,6 +73,23 @@ class NewUserNotification extends Notification implements ShouldQueue
             'text' => $this->notification_text,
             'url'  => route( 'admin.users.edit', $notifiable->id ),
         ];
+    }
+
+
+    /*
+     *
+     */
+    public function toBroadcast( $notifiable )
+    {
+        $unread_count = $notifiable->unreadNotifications->count();
+        $unread_count = $unread_count > 99 ? '+99' : $unread_count;
+
+        return new BroadcastMessage( [
+            'id'           => $this->id,
+            'message'      => $this->notification_text,
+            'url'          => route( 'admin.users.edit', $notifiable->id ),
+            'unread_count' => $unread_count,
+        ] );
     }
 
 

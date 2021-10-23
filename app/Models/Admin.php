@@ -6,6 +6,7 @@ use App\Models\Role\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
@@ -47,6 +48,17 @@ class Admin extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany( Role::class, 'admin_role', 'admin_id', 'role_id', )->withTimestamps();
+    }
+
+
+    /*
+     *
+     */
+    public function unreadNotifications()
+    {
+        return $this->morphMany( DatabaseNotification::class, 'notifiable' )
+            ->orderBy( 'created_at', 'desc' )
+            ->whereNull( 'read_at' );
     }
 
 

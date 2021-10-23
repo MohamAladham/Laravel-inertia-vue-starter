@@ -34,6 +34,8 @@
     <link href="{{url('/')}}/assets/admin/vendors/js/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
     <!-- Select2 -->
     <link href="{{url('/')}}/assets/admin/vendors/css/forms/select/select2.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/custom/js/toastr/toastr.min.css">
+
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{url('/')}}/assets/admin/css-rtl/custom-rtl.css">
@@ -65,6 +67,9 @@
 <!-- Select2 -->
 <script src="{{url('/')}}/assets/admin/vendors/js/forms/select/select2.full.min.js"></script>
 
+<script src="{{url('/')}}/assets/admin/custom/js/toastr/toastr.min.js"></script>
+<script src="{{url('/')}}/assets/admin/custom/js/jquery-play-sound/jquery.playSound.js"></script>
+
 <script src="{{url('/')}}/assets/admin/custom/js/script.js"></script>
 @inertia
 
@@ -86,7 +91,46 @@
             });
         }
     })
+
+    toastr.options.rtl = true;
+    toastr.options.preventDuplicates = true;
+    toastr.options.positionClass = 'toast-top-left';
+
+    window.laravel_echo_port = '{{env("LARAVEL_ECHO_PORT")}}';
 </script>
+<script src="http://{{request()->getHost()}}:6001/socket.io/socket.io.js"></script>
+<script src="{{ url('/js/laravel-echo-setup.js') }}" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+    @php
+        /* SAMPLE
+        Echo.private('broadcastOn')
+            .listen('.broadcastAs', (e) => {
+
+            });*/
+    @endphp
+
+    if (window.Echo) {
+        Echo.private('App.Models.Admin.{{auth()->id()}}').notification((notification) => {
+            console.log(notification);
+
+            toastr.options.onclick = function () {
+                window.location.href = notification.url;
+            };
+            toastr.info((notification.message));
+            $.playSound("{{url('assets/admin/custom/notification.mp3')}}");
+
+            if (parseInt(notification.unread_count) > 0) {
+                $('#notificationsBadge').text(notification.unread_count).show();
+            }
+        });
+    }
+
+</script>
+
+
 </body>
 <!-- END: Body-->
 </html>

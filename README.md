@@ -10,6 +10,8 @@
 - run `php artisan migrate --seed` to run database migrations
 - run `npm install`
 - for test proposal run `php artisan serve`
+- copy `laravel-echo-server.example.json` to `laravel-echo-server.json ` and set values : `authHost, host, sslCertPath, sslKeyPath`
+- run `laravel-echo-server start`
 
 **Notes:**
 
@@ -19,3 +21,24 @@
 #### Setup CronJob
 
 - `* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1`
+
+
+
+#### Requirements
+- PHP ^7.3|^8.0
+- BCMath PHP Extension
+- Ctype PHP Extension
+- Fileinfo PHP extension
+- JSON PHP Extension
+- Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PDO PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
+- Redis Server
+- NodeJs
+
+#### Setup Redis Server
+- install redis server
+- run `redis-server --daemonize yes` to keep redis server running on background
+- then check it with `ps aux | grep redis-server`

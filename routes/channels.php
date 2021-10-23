@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+/*
+ * SAMPLE
+Broadcast::channel( 'testbroadcasts.{id}', function ( $user ) {
+    return TRUE;
+}, [ 'guards' => [ 'admin' ] ] );*/
+
+
+Broadcast::channel( 'App.Models.Admin.{id}', function ( $user, $id ) {
     return (int) $user->id === (int) $id;
-});
+}, [ 'guards' => [ 'admin' ] ] );
