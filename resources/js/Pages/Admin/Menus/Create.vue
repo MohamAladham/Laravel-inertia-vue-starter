@@ -31,14 +31,9 @@
     </div>
 </template>
 <script>
-import TextInput from "@/Components/Admin/Inputs/TextInput"
-import HiddenInput from "@/Components/Admin/Inputs/HiddenInput"
-import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
-import SelectInput from "@/Components/Admin/Inputs/SelectInput";
 
 export default {
     name: 'create',
-    components: {SubmitButton, TextInput, HiddenInput, SelectInput},
     props: {
         parent_id: 0
     },

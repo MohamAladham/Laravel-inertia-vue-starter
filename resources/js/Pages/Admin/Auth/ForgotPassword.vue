@@ -32,13 +32,9 @@
 
 <script>
 import AdminAuthLayout from "@/Layouts/Admin/AdminAuth"
-import TextInput from "@/Components/Admin/Inputs/TextInput";
 
 export default {
     layout: AdminAuthLayout,
-
-    components: {TextInput},
-
     props: {
         auth: Object,
         errors: Object,

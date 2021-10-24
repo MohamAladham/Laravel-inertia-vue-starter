@@ -34,13 +34,9 @@
     </div>
 </template>
 <script>
-import TextInput from "@/Components/Admin/Inputs/TextInput"
-import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
-import SelectInput from "@/Components/Admin/Inputs/SelectInput";
 
 export default {
     name: 'edit',
-    components: {SelectInput, SubmitButton, TextInput},
     props: {
         form: {},
         errors: {}

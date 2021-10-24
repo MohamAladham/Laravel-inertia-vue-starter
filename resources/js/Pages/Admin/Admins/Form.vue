@@ -97,17 +97,9 @@
 </template>
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
-import TextInput from "@/Components/Admin/Inputs/TextInput"
-import FileInput from "@/Components/Admin/Inputs/FileInput"
-import Select2Input from "@/Components/Admin/Inputs/Select2Input"
-import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
-import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
-import Card from "@/Components/Admin/Card";
-import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
     layout: AdminLayout,
-    components: {SubmitButton, TextInput, FileInput, Select2Input, PageHead, Card, Breadcrumb},
     props: {
         title: '',
         item: {},

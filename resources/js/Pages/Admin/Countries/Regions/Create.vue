@@ -27,12 +27,11 @@
     </div>
 </template>
 <script>
-import TextInput from "@/Components/Admin/Inputs/TextInput"
-import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
+
 
 export default {
     name: 'edit',
-    components: {SubmitButton, TextInput},
+
     props: {
         country: {}
     },

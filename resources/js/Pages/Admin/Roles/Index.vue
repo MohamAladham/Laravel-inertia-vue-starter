@@ -70,17 +70,10 @@
 
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
-import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
-import Card from "@/Components/Admin/Card";
-import Paginate from "@/Components/Admin/Paginate";
-import TableSearch from "@/Components/Admin/TableSearch";
-import PageHead from "@/Layouts/Admin/PageHead";
-import TablePlaceholder from "@/Components/Admin/TablePlaceholder";
 
 export default {
     layout: AdminLayout,
     props: ['errors', 'title'],
-    components: {PageHead, TableSearch, Card, Breadcrumb, Paginate, TablePlaceholder},
     data() {
         return {
             breadcrumbLinks: [

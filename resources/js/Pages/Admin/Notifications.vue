@@ -51,10 +51,8 @@
 <script>
 
 import AdminLayout from "@/Layouts/Admin/Layout";
-import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
-    components: {PageHead},
     layout: AdminLayout,
     props: {
         notifications: [],

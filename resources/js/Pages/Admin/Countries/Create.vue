@@ -27,12 +27,9 @@
     </div>
 </template>
 <script>
-import TextInput from "@/Components/Admin/Inputs/TextInput"
-import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
 
 export default {
     name: 'create',
-    components: {SubmitButton, TextInput},
     props: {},
     data() {
         return {

@@ -63,16 +63,9 @@
 </template>
 <script>
 import AdminLayout from "@/Layouts/Admin/Layout";
-import TextInput from "@/Components/Admin/Inputs/TextInput"
-import SubmitButton from "@/Components/Admin/Inputs/SubmitButton";
-import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
-import Card from "@/Components/Admin/Card";
-import PageHead from "@/Layouts/Admin/PageHead";
-import CheckboxInput from "@/Components/Admin/Inputs/CheckboxInput";
 
 export default {
     layout: AdminLayout,
-    components: {CheckboxInput, SubmitButton, TextInput, PageHead, Card, Breadcrumb},
     props: {
         title: '',
         item: {},

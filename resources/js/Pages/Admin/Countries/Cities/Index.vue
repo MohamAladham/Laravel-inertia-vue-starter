@@ -82,29 +82,15 @@
 import AdminLayout from "@/Layouts/Admin/Layout";
 import Edit from "@/Pages/Admin/Countries/Cities/Edit";
 import Create from "@/Pages/Admin/Countries/Cities/Create";
-import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
-import Card from "@/Components/Admin/Card";
-import Paginate from "@/Components/Admin/Paginate";
 import draggable from "vuedraggable";
-import TableSearch from "@/Components/Admin/TableSearch";
-import PageHead from "@/Layouts/Admin/PageHead";
-import TablePlaceholder from "@/Components/Admin/TablePlaceholder";
-
 
 export default {
     layout: AdminLayout,
     props: ['errors', 'country', 'region', 'title'],
     components: {
-        PageHead,
-        TableSearch,
-        Card,
-        Breadcrumb,
-
         Create,
         Edit,
-        Paginate,
         draggable,
-        TablePlaceholder
     },
     data() {
         return {

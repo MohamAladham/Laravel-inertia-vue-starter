@@ -109,16 +109,13 @@
 import AdminLayout from "@/Layouts/Admin/Layout";
 import Edit from "@/Pages/Admin/Menus/Edit";
 import Create from "@/Pages/Admin/Menus/Create";
-import Breadcrumb from "@/Layouts/Admin/Breadcrumb";
-import Card from "@/Components/Admin/Card";
-import Paginate from "@/Components/Admin/Paginate";
+
 import draggable from "vuedraggable";
-import PageHead from "@/Layouts/Admin/PageHead";
 
 export default {
     layout: AdminLayout,
     props: ["items", 'errors', 'title'],
-    components: {PageHead, Card, Breadcrumb,  Create, Edit, Paginate, draggable},
+    components: {Create, Edit, draggable},
     data() {
         return {
             editItemForm: this.$inertia.form({
