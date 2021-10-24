@@ -34,7 +34,7 @@ class SettingController extends Controller
     public function updateGeneral()
     {
         $fields      = request()->except( [ '_token' ] );
-        $filesFields = [ 'admin_panel_logo' ];
+        $filesFields = [ 'admin_panel_logo', 'favicon' ];
 
         foreach ( $fields as $k => $v )
         {

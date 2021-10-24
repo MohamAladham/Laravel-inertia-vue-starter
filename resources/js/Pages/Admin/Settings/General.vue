@@ -61,7 +61,12 @@ export default {
                             name: 'admin_panel_logo',
                             type: 'image',
                             label: 'شعار لوحة التحكم',
-                        }
+                        },
+                        {
+                            name: 'favicon',
+                            type: 'image',
+                            label: 'الشعار في تبويبة المتصفح',
+                        },
                     ],
                 }
             ]

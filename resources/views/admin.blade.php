@@ -1,3 +1,6 @@
+@php
+    $favicon = get_setting( 'favicon', asset( 'assets/admin/custom/img/logo_placeholder.png' ) );
+@endphp
 <!DOCTYPE html>
 
 
@@ -10,8 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
-    <link rel="apple-touch-icon" href="{{url('/')}}/assets/admin/images/ico/favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="{{url('/')}}/assets/admin/images/ico/favicon.ico">
+    <link rel="apple-touch-icon" href="{{$favicon}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{$favicon}}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
