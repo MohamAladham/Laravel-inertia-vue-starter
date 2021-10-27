@@ -96,10 +96,8 @@
 
 </template>
 <script>
-import AdminLayout from "@/Layouts/Admin/Layout";
 
 export default {
-    layout: AdminLayout,
     props: {
         title: '',
         item: {},

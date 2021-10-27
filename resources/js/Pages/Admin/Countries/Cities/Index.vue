@@ -79,13 +79,11 @@
 </template>
 
 <script>
-import AdminLayout from "@/Layouts/Admin/Layout";
 import Edit from "@/Pages/Admin/Countries/Cities/Edit";
 import Create from "@/Pages/Admin/Countries/Cities/Create";
 import draggable from "vuedraggable";
 
 export default {
-    layout: AdminLayout,
     props: ['errors', 'country', 'region', 'title'],
     components: {
         Create,

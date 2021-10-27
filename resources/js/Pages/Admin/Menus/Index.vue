@@ -106,14 +106,12 @@
 
 
 <script>
-import AdminLayout from "@/Layouts/Admin/Layout";
 import Edit from "@/Pages/Admin/Menus/Edit";
 import Create from "@/Pages/Admin/Menus/Create";
 
 import draggable from "vuedraggable";
 
 export default {
-    layout: AdminLayout,
     props: ["items", 'errors', 'title'],
     components: {Create, Edit, draggable},
     data() {

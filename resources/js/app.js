@@ -4,6 +4,7 @@ require('./bootstrap');
 import {createApp, h} from 'vue';
 import {App as InertiaApp, plugin as InertiaPlugin} from '@inertiajs/inertia-vue3';
 import {InertiaProgress} from '@inertiajs/progress';
+import AdminLayout from "@/Layouts/Admin/Layout";
 
 const el = document.getElementById('app');
 
@@ -11,7 +12,11 @@ var Vue = createApp({
         render: () =>
             h(InertiaApp, {
                 initialPage: JSON.parse(el.dataset.page),
-                resolveComponent: (name) => require(`./Pages/${name}`).default,
+                resolveComponent: (name) => {
+                    let page = require(`./Pages/${name}`).default;
+                    page.layout ??= AdminLayout;
+                    return page;
+                },
             }),
     })
         .mixin({methods: {route}})

@@ -50,10 +50,8 @@
 
 <script>
 
-import AdminLayout from "@/Layouts/Admin/Layout";
 
 export default {
-    layout: AdminLayout,
     props: {
         notifications: [],
         title: ''

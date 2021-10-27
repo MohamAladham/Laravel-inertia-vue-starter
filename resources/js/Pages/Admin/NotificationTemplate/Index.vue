@@ -60,11 +60,9 @@
 </template>
 
 <script>
-import AdminLayout from "@/Layouts/Admin/Layout";
 import Edit from "@/Pages/Admin/NotificationTemplate/Edit";
 
 export default {
-    layout: AdminLayout,
     props: ['title'],
     components: { Edit},
     data() {
