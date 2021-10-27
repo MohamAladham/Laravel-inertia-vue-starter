@@ -111,7 +111,7 @@ export default {
                     title: 'الإعدادات',
                     icon: 'settings',
                     url: null,
-                    activeCheck: ['admin.settings.*', 'admin.countries.*', 'menus.*', 'notification_templates.*'],
+                    activeCheck: ['admin.settings.*', 'admin.countries.*', 'admin.menus.*', 'admin.notification_templates.*'],
                     permissions: ['setting_manage', 'menu_manage', 'country_manage', 'notification_template_manage'],
                     subLinks: [
                         {
