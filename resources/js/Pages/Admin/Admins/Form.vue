@@ -99,10 +99,22 @@
 
 export default {
     props: {
-        title: '',
+        title: {
+            default() {
+                return null
+            }
+        },
         item: {},
-        roles: [],
-        admin_roles: [],
+        roles: {
+            default() {
+                return []
+            }
+        },
+        admin_roles: {
+            default() {
+                return []
+            }
+        },
     },
     data() {
         return {

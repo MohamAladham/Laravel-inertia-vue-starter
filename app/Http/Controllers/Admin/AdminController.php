@@ -58,6 +58,7 @@ class AdminController extends Controller
     public function create()
     {
         $data['title'] = 'إضافة مدير جديد';
+        $data['roles']       = Role::get();
 
         return Inertia::render( $this->viewPrefix . 'Form', $data );
     }
