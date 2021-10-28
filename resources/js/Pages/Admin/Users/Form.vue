@@ -41,9 +41,9 @@
                                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
                                         <div class="row">
                                             <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المستخدم" required="true"/>
-                                            <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"  required="true"/>
+                                            <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني" required="true"/>
 
-                                            <select-input v-model:value="form.country_id" @change="onCountryChange()" :error="form.errors.country_id" label="الدولة"  required="true">
+                                            <select-input v-model:value="form.country_id" @change="onCountryChange()" :error="form.errors.country_id" label="الدولة" required="true">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="country in countries" :key="country.id" :selected="country.id===form.country_id" :value="country.id">{{ country.name }}</option>
                                             </select-input>
@@ -67,8 +67,8 @@
 
                                     <!-- change password -->
                                     <div class="tab-pane fade" id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
-                                        <text-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" required="true"/>
-                                        <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" required="true"/>
+                                        <text-input type="password" v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" required="true"/>
+                                        <text-input type="password" v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" required="true"/>
                                     </div>
                                     <!--/ change password -->
 
@@ -151,7 +151,7 @@ export default {
                     }
                 },
                 onError: errors => {
-                        generalOnُError(errors);
+                    generalOnُError(errors);
                 },
             })
         },

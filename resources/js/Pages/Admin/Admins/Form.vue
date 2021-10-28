@@ -58,8 +58,8 @@
 
                                     <!-- change password -->
                                     <div class="tab-pane fade" id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
-                                        <text-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" required="true"/>
-                                        <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" required="true"/>
+                                        <text-input type="password" v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" required="true"/>
+                                        <text-input type="password" v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" required="true"/>
                                     </div>
                                     <!--/ change password -->
 
