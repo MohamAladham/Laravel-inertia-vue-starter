@@ -16,7 +16,7 @@
                     </h4>
                 </template>
                 <template #body>
-                    <text-input v-model:value="form.name" :error="form.errors.name" label="اسم الدور"/>
+                    <text-input v-model:value="form.name" :error="form.errors.name" label="اسم الدور" required="true"/>
                 </template>
             </card>
 

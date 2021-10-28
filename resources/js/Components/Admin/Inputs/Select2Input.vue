@@ -1,7 +1,9 @@
 <template>
-    <div class="col-sm-12">
+    <div :class="'col-sm-'+col">
         <div class="form-group">
-            <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
+            <label v-if="label" class="form-label" :for="id">{{ label }}
+                <span v-if="required" class="text-danger">*</span>
+            </label>
             <select :id="id" ref="input" v-bind="$attrs" class="form-control select2" :class="{ 'border-danger': error }"
                     @change="$emit('update:value', $event.target.value)"
             >
@@ -19,11 +21,15 @@ export default {
     inheritAttrs: false,
     emits: ['update:value'],
     props: {
-        id: {
-            type: String,
+        id: String,
+        col: {
             default() {
-                // return `select-input-${this._uid}`
-            },
+                return 12;
+            }
+        },
+        required: {
+            type: Boolean,
+            default: false
         },
         value: [String, Number, Boolean],
         label: String,

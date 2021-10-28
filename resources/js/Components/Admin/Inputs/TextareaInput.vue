@@ -1,7 +1,9 @@
 <template>
-    <div class="col-sm-12">
+    <div :class="'col-sm-'+col">
         <div class="form-group">
-            <label :for="id" class="form-label">{{ label }}</label>
+            <label :for="id" class="form-label">{{ label }}
+                <span v-if="required" class="text-danger">*</span>
+            </label>
             <textarea
                 :name="id"
                 :id="id"
@@ -22,13 +24,16 @@
 export default {
     name: 'textarea-input',
     props: {
-        id: {
-            type: String,
+        id: String,
+        col: {
             default() {
-                return `textarea-input-` + Math.round(Math.random() * 100);
-            },
+                return 12;
+            }
         },
-
+        required: {
+            type: Boolean,
+            default: false
+        },
         error: String,
         label: String,
         value: String,

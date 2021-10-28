@@ -1,8 +1,9 @@
 <template>
-    <div class="col-sm-12">
+    <div :class="'col-sm-'+col">
         <div class="form-group">
 
             <label v-if="label" class="form-label d-block" :for="id">
+                <span v-if="required" class="text-danger">*</span>
                 <input type="checkbox" :checked="isChecked()" :value="value" v-bind="$attrs" :id="id" ref="input"
                        @change="check()">
                 {{ label }}
@@ -20,11 +21,15 @@ export default {
     inheritAttrs: false,
     emits: ['update:selected'],
     props: {
-        id: {
-            type: String,
+        id: String,
+        col: {
             default() {
-                // return `select-input-${this._uid}`
-            },
+                return 12;
+            }
+        },
+        required: {
+            type: Boolean,
+            default: false
         },
         selected: [Array, Boolean],
         value: [String, Number, Boolean],

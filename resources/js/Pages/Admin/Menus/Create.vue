@@ -11,9 +11,9 @@
                     </div>
                     <div class="modal-body">
 
-                        <text-input v-model:value="form.title" :error="form.errors.title" label="عنوان الرابط"/>
-                        <text-input v-model:value="form.url" :error="form.errors.url" label="الرابط"/>
-                        <select-input v-model:value="form.is_active" :error="form.errors.is_active" label="حالة التفعيل">
+                        <text-input v-model:value="form.title" :error="form.errors.title" label="عنوان الرابط" required="true"/>
+                        <text-input v-model:value="form.url" :error="form.errors.url" label="الرابط" required="true"/>
+                        <select-input v-model:value="form.is_active" :error="form.errors.is_active" label="حالة التفعيل" required="true">
                             <option v-for="item in [{key:1,value:'مفعل'},{key:0,value:'غير مفعل'}]" :key="item.key" :value="item.key">{{ item.value }}</option>
                         </select-input>
                         <hidden-input v-model:value="form.parent_id" :error="form.errors.parent_id"/>

@@ -1,6 +1,8 @@
 <template>
-    <div class="col-sm-12">
-        <label v-if="label" class="form-label">{{ label }}:</label>
+    <div :class="'col-sm-'+col">
+        <label v-if="label" class="form-label">{{ label }}
+            <span v-if="required" class="text-danger">*</span>
+        </label>
         <div class="row">
             <input ref="file" type="file" :accept="accept" class="hidden" @change="change" v-bind="$attrs"/>
 
@@ -39,6 +41,16 @@
 export default {
     emits: ['update:value'],
     props: {
+        id: String,
+        col: {
+            default() {
+                return 12;
+            }
+        },
+        required: {
+            type: Boolean,
+            default: false
+        },
         value: File,
         preview: String,
         isImg: {

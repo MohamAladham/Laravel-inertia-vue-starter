@@ -11,7 +11,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المدينة"/>
+                        <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المدينة" required="true"/>
 
                     </div>
                     <div class="modal-footer">

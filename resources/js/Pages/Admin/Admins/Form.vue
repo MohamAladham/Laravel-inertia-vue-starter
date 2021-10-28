@@ -49,23 +49,23 @@
                                     <!-- general tab -->
                                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
                                         <div class="row">
-                                            <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المدير"/>
-                                            <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"/>
-                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="form.errors.photo" label="الصورة الشخصية"/>
+                                            <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المدير" required="true"/>
+                                            <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني" required="true"/>
+                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="form.errors.photo" label="الصورة الشخصية" required="true"/>
                                         </div>
                                     </div>
                                     <!--/ general tab -->
 
                                     <!-- change password -->
                                     <div class="tab-pane fade" id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
-                                        <text-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور"/>
-                                        <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور"/>
+                                        <text-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" required="true"/>
+                                        <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" required="true"/>
                                     </div>
                                     <!--/ change password -->
 
                                     <!-- roles  -->
                                     <div class="tab-pane fade" id="account-vertical-roles" role="tabpanel" aria-labelledby="account-pill-roles" aria-expanded="false">
-                                        <select2-input v-model:value="form.roles" :error="form.errors.roles" label="الأدوار" multiple>
+                                        <select2-input v-model:value="form.roles" :error="form.errors.roles" label="الأدوار" multiple required="true">
                                             <option v-for="role in roles" :key="role.id" :selected="form.roles.includes(role.id)" :value="role.id">{{ role.name }}</option>
                                         </select2-input>
                                     </div>

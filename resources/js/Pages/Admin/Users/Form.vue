@@ -40,26 +40,26 @@
                                     <!-- general tab -->
                                     <div role="tabpanel" class="tab-pane active" id="account-vertical-general" aria-labelledby="account-pill-general" aria-expanded="true">
                                         <div class="row">
-                                            <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المستخدم"/>
-                                            <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"/>
+                                            <text-input v-model:value="form.name" :error="form.errors.name" label="اسم المستخدم" required="true"/>
+                                            <text-input v-model:value="form.email" type="email" :error="form.errors.email" label="البريد الإلكتروني"  required="true"/>
 
-                                            <select-input v-model:value="form.country_id" @change="onCountryChange()" :error="form.errors.country_id" label="الدولة">
+                                            <select-input v-model:value="form.country_id" @change="onCountryChange()" :error="form.errors.country_id" label="الدولة"  required="true">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="country in countries" :key="country.id" :selected="country.id===form.country_id" :value="country.id">{{ country.name }}</option>
                                             </select-input>
 
 
-                                            <select-input v-model:value="form.region_id" id="region_id" @change="onRegionChange()" :error="form.errors.region_id" label="المنطقة">
+                                            <select-input v-model:value="form.region_id" id="region_id" @change="onRegionChange()" :error="form.errors.region_id" label="المنطقة" required="true">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="region in regions" :key="region.id" :selected="region.id===form.region_id" :value="region.id">{{ region.name }}</option>
                                             </select-input>
 
-                                            <select-input v-model:value="form.city_id" id="city_id" :error="form.errors.city_id" label="المدينة">
+                                            <select-input v-model:value="form.city_id" id="city_id" :error="form.errors.city_id" label="المدينة" required="true">
                                                 <option :value="null">فضلاً إختر..</option>
                                                 <option v-for="city in cities" :key="city.id" :selected="city.id===form.city_id" :value="city.id">{{ city.name }}</option>
                                             </select-input>
 
-                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="form.errors.photo" label="الصورة الشخصية"/>
+                                            <file-input v-model:value="form.photo" :isImg="true" v-model:preview="form.photoPreview" :error="form.errors.photo" label="الصورة الشخصية" required="true"/>
 
                                         </div>
                                     </div>
@@ -67,8 +67,8 @@
 
                                     <!-- change password -->
                                     <div class="tab-pane fade" id="account-vertical-password" role="tabpanel" aria-labelledby="account-pill-password" aria-expanded="false">
-                                        <text-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور"/>
-                                        <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور"/>
+                                        <text-input v-model:value="form.password" :error="form.errors.password" label="كلمة المرور" required="true"/>
+                                        <text-input v-model:value="form.password_confirmation" :error="form.errors.password_confirmation" label="تأكيد كلمة المرور" required="true"/>
                                     </div>
                                     <!--/ change password -->
 

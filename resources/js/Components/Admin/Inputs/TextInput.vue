@@ -1,7 +1,9 @@
 <template>
-    <div class="col-sm-12">
+    <div :class="'col-sm-'+col">
         <div class="form-group">
-            <label :for="id" class="form-label">{{ label }}</label>
+            <label :for="id" class="form-label">{{ label }}
+                <span v-if="required" class="text-danger">*</span>
+            </label>
             <input
                 :type="type"
                 :class="{ 'border-danger': error,'ssss':false }"
@@ -23,17 +25,21 @@ export default {
     name: 'text-input',
     emits: ['update:value'],
     props: {
-        id: {
-            type: String,
+        id: String,
+        col: {
             default() {
-                return `text-input-` + Math.round(Math.random() * 100);
-            },
+                return 12;
+            }
         },
         type: {
             type: String,
             default() {
                 return 'text';
             }
+        },
+        required: {
+            type: Boolean,
+            default: false
         },
         tabindex: null,
         error: String,

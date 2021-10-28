@@ -16,15 +16,14 @@ export default {
     name: 'hidden-input',
     emits: ['update:value'],
     props: {
-        id: {
-            type: String,
-            default() {
-                return `text-input-` + Math.round(Math.random() * 100);
-            },
-        },
+        id: String,
         tabindex: null,
         error: String,
         value: String,
+        required: {
+            type: Boolean,
+            default: false
+        },
     },
     methods: {
         focus() {
