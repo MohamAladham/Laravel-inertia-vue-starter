@@ -13,6 +13,8 @@
     </div>
 </template>
 <script>
+import debounce from "lodash/debounce";
+
 export default {
     name: 'table-search',
     props: {
@@ -31,7 +33,7 @@ export default {
         };
     },
     methods: {
-        searching() {
+        searching: debounce(function () {
             if (this.isAjax) {
                 this.filter.search = this.search;
                 this.filter.page = 1;//reset to first page
@@ -42,7 +44,7 @@ export default {
                     route(this.routeSearch[0], Object.assign({search: this.search}, this.routeSearch[1]))
                 );
             }
-        },
+        }, 350),
     }
 
 }
