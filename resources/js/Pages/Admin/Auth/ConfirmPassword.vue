@@ -1,3 +1,7 @@
+<template>
+
+</template>
+
 <!--
 <template>
     <div class="mb-4 text-sm text-gray-600">

@@ -1,3 +1,4 @@
+<template></template>
 <!--
 <template>
     <breeze-validation-errors class="mb-4" />
