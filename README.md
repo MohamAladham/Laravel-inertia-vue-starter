@@ -3,7 +3,8 @@
 ## Installation:
 
 - run `composer install` to install vendor packages
-- make storage and bootstrap folder writable `chmod -R 777 storage bootstrap`
+- make storage and bootstrap folder writable `chown -R www-data:www-data storage bootstrap`
+  `chmod -R 755 storage bootstrap`
 - run `php artisan storage:link` to make them accessible from the web
 - copy `.env.example ` to `.env ` and set necessary configs
 - run `php artisan key:generate` to generate new application key
