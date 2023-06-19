@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-sm-6 offset-sm-3">
                     <div class="collapse-shadow collapse-icon bg-white mt-2 mb-5">
-                        <draggable v-model="items" item-key="id" :animation="200" @end="endSorting()">
+                        <draggable v-model="menuItems" item-key="id" :animation="200" @end="endSorting()">
                             <template #item="{element}">
                                 <div
                                     @mouseover="$refs['controlButtons'+ element.id].classList.remove('d-none')"
@@ -116,6 +116,7 @@ export default {
     components: {Create, Edit, draggable},
     data() {
         return {
+            menuItems: this.items,
             editItemForm: this.$inertia.form({
                 title: '',
                 url: '',
